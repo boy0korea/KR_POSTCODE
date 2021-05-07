@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Component Name="FPM_FORM_UIBB_GL2" ConfId="ZKR_POSTCODE_DEMO_FPM_FORM" ConfType="00" ConfVar="">
+ <Node Name="CONFIGURATION_CONTEXT" SimpleFormat="true">
+  <Item Index="000001" SimpleFormat="true">
+   <Node Name="FORM" SimpleFormat="true">
+    <Item Index="000001" SimpleFormat="true">
+     <FEEDER>ZCL_KR_POSTCODE_DEMO_FPM_FORM</FEEDER>
+     <Node Name="ACTION" SimpleFormat="true">
+      <Item Index="000001" SimpleFormat="true">
+       <ID Final="5 ">FGL2_605D079009D70550E100800037C80A6B</ID>
+       <TYPE/>
+       <EVENT_ID>ADDR</EVENT_ID>
+       <EVENT_PARAMETERS/>
+      </Item>
+     </Node>
+     <Node Name="BUTTON" SimpleFormat="true">
+      <Item Index="000001" SimpleFormat="true">
+       <ID Final="5 ">FGL2_605D079009D70550E100800037C80A6B</ID>
+       <TYPE>BU</TYPE>
+       <EXPLANATION_TEXT Transl="true"/>
+       <IMAGE/>
+       <TEXT Transl="true"/>
+       <TOOLTIP Transl="true"/>
+       <SPECIAL_PROPERTIES/>
+       <CTXT_MENU_ID/>
+       <Node Name="BUTTON_SUB_ITEM" SimpleFormat="true">
+        <Item Index="000001" SimpleFormat="true">
+         <ACTION_ID Final="5 ">FGL2_605D079009D70550E100800037C80A6B</ACTION_ID>
+         <INDEX/>
+         <HOTKEY/>
+         <IMAGE/>
+         <TEXT Transl="true">1</TEXT>
+        </Item>
+       </Node>
+      </Item>
+     </Node>
+     <Node Name="BUTTON_ROW" SimpleFormat="true"/>
+     <Node Name="CTXT_MENU" SimpleFormat="true"/>
+     <Node Name="DROP_TARGET" SimpleFormat="true"/>
+     <Node Name="FORM_GROUP" SimpleFormat="true"/>
+     <Node Name="PARAMETER" SimpleFormat="true"/>
+     <Node Name="POSITION" SimpleFormat="true">
+      <Item Index="000001" SimpleFormat="true">
+       <ID Final="5 ">_GENP_605D079109D70550E100800037C80A6B</ID>
+       <START_ROW>1</START_ROW>
+       <START_COLUMN>A</START_COLUMN>
+       <END_ROW>1</END_ROW>
+       <END_COLUMN>P</END_COLUMN>
+       <LABEL_START_ROW/>
+       <LABEL_START_COLUMN/>
+       <LABEL_END_ROW/>
+       <LABEL_END_COLUMN/>
+       <FORM_ELEMENT_TYPE>BU</FORM_ELEMENT_TYPE>
+       <FORM_ELEMENT_ID>FGL2_605D079009D70550E100800037C80A6B</FORM_ELEMENT_ID>
+      </Item>
+      <Item Index="000002" SimpleFormat="true">
+       <ID Final="5 ">_GENP_605D07D009D70550E100800037C80A6B</ID>
+       <START_ROW>2</START_ROW>
+       <START_COLUMN>D</START_COLUMN>
+       <END_ROW>2</END_ROW>
+       <END_COLUMN>P</END_COLUMN>
+       <LABEL_START_ROW>2</LABEL_START_ROW>
+       <LABEL_START_COLUMN>A</LABEL_START_COLUMN>
+       <LABEL_END_ROW>2</LABEL_END_ROW>
+       <LABEL_END_COLUMN>C</LABEL_END_COLUMN>
+       <FORM_ELEMENT_TYPE>SE</FORM_ELEMENT_TYPE>
+       <FORM_ELEMENT_ID>FGL2_605D07CD09D70550E100800037C80A6B</FORM_ELEMENT_ID>
+      </Item>
+      <Item Index="000003" SimpleFormat="true">
+       <ID Final="5 ">_GENP_605D07D109D70550E100800037C80A6B</ID>
+       <START_ROW>3</START_ROW>
+       <START_COLUMN>D</START_COLUMN>
+       <END_ROW>3</END_ROW>
+       <END_COLUMN>P</END_COLUMN>
+       <LABEL_START_ROW>3</LABEL_START_ROW>
+       <LABEL_START_COLUMN>A</LABEL_START_COLUMN>
+       <LABEL_END_ROW>3</LABEL_END_ROW>
+       <LABEL_END_COLUMN>C</LABEL_END_COLUMN>
+       <FORM_ELEMENT_TYPE>SE</FORM_ELEMENT_TYPE>
+       <FORM_ELEMENT_ID>FGL2_605D07CE09D70550E100800037C80A6B</FORM_ELEMENT_ID>
+      </Item>
+      <Item Index="000004" SimpleFormat="true">
+       <ID Final="5 ">_GENP_605D07D209D70550E100800037C80A6B</ID>
+       <START_ROW>4</START_ROW>
+       <START_COLUMN>D</START_COLUMN>
+       <END_ROW>4</END_ROW>
+       <END_COLUMN>P</END_COLUMN>
+       <LABEL_START_ROW>4</LABEL_START_ROW>
+       <LABEL_START_COLUMN>A</LABEL_START_COLUMN>
+       <LABEL_END_ROW>4</LABEL_END_ROW>
+       <LABEL_END_COLUMN>C</LABEL_END_COLUMN>
+       <FORM_ELEMENT_TYPE>SE</FORM_ELEMENT_TYPE>
+       <FORM_ELEMENT_ID>FGL2_605D07CF09D70550E100800037C80A6B</FORM_ELEMENT_ID>
+      </Item>
+     </Node>
+     <Node Name="STANDARD_ELEMENT" SimpleFormat="true">
+      <Item Index="000001" SimpleFormat="true">
+       <ID Final="5 ">FGL2_605D07CD09D70550E100800037C80A6B</ID>
+       <NAME>ZONECODE</NAME>
+       <TYPE>IN</TYPE>
+       <EXPLANATION Transl="true"/>
+       <TEXT Transl="true"/>
+       <TOOLTIP Transl="true"/>
+       <SPECIAL_PROPERTIES>﻿&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;asx:abap xmlns:asx=&quot;http://www.sap.com/abapxml&quot; version=&quot;1.0&quot;&gt;&lt;asx:values&gt;&lt;BN1&gt;&lt;ALIGNMENT&gt;03&lt;/ALIGNMENT&gt;&lt;BORDER&gt;0&lt;/BORDER&gt;&lt;COL_COUNT&gt;1&lt;/COL_COUNT&gt;&lt;DISPLAY_AS_TEXT/&gt;&lt;HOTKEY&gt;00&lt;/HOTKEY&gt;&lt;IMAGE_SOURCE/&gt;&lt;KEY_VISIBLE/&gt;&lt;LINK_DESIGN&gt;00&lt;/LINK_DESIGN&gt;&lt;LINK_TYPE&gt;02&lt;/LINK_TYPE&gt;&lt;MAX_TICK_MARKS&gt;0&lt;/MAX_TICK_MARKS&gt;&lt;MIME_TYPE/&gt;&lt;PASSWORD_FIELD/&gt;&lt;ROW_COUNT&gt;5&lt;/ROW_COUNT&gt;&lt;SHOW_TICK_MARKS/&gt;&lt;SUGGEST_VALUES/&gt;&lt;TARGET/&gt;&lt;TEXT_DOCUMENT_NAME/&gt;&lt;TEXT_VIEW_DESIGN&gt;09&lt;/TEXT_VIEW_DESIGN&gt;&lt;TEXT_VIEW_LAYOUT&gt;01&lt;/TEXT_VIEW_LAYOUT&gt;&lt;TEXTVIEW_SEM_COL&gt;00&lt;/TEXTVIEW_SEM_COL&gt;&lt;TEXT_WRAPPING&gt;02&lt;/TEXT_WRAPPING&gt;&lt;THRESHOLDS/&gt;&lt;TICK_MARK_SPACING&gt;0&lt;/TICK_MARK_SPACING&gt;&lt;UNIT_WIDTH&gt;0&lt;/UNIT_WIDTH&gt;&lt;WIDTH/&gt;&lt;WRAPPING/&gt;&lt;/BN1&gt;&lt;/asx:values&gt;&lt;/asx:abap&gt;</SPECIAL_PROPERTIES>
+       <SPECIAL_ACTIONS/>
+       <LABEL_TEXT Transl="true"/>
+       <LABEL_VISIBILITY>02</LABEL_VISIBILITY>
+       <TAG_ACTIVE/>
+       <CTXT_MENU_ID/>
+      </Item>
+      <Item Index="000002" SimpleFormat="true">
+       <ID Final="5 ">FGL2_605D07CE09D70550E100800037C80A6B</ID>
+       <NAME>ROADADDRESS</NAME>
+       <TYPE>IN</TYPE>
+       <EXPLANATION Transl="true"/>
+       <TEXT Transl="true"/>
+       <TOOLTIP Transl="true"/>
+       <SPECIAL_PROPERTIES/>
+       <SPECIAL_ACTIONS/>
+       <LABEL_TEXT Transl="true"/>
+       <LABEL_VISIBILITY>02</LABEL_VISIBILITY>
+       <TAG_ACTIVE/>
+       <CTXT_MENU_ID/>
+      </Item>
+      <Item Index="000003" SimpleFormat="true">
+       <ID Final="5 ">FGL2_605D07CF09D70550E100800037C80A6B</ID>
+       <NAME>JIBUNADDRESS</NAME>
+       <TYPE>IN</TYPE>
+       <EXPLANATION Transl="true"/>
+       <TEXT Transl="true"/>
+       <TOOLTIP Transl="true"/>
+       <SPECIAL_PROPERTIES>﻿&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;asx:abap xmlns:asx=&quot;http://www.sap.com/abapxml&quot; version=&quot;1.0&quot;&gt;&lt;asx:values&gt;&lt;BN1&gt;&lt;ALIGNMENT&gt;03&lt;/ALIGNMENT&gt;&lt;BORDER&gt;0&lt;/BORDER&gt;&lt;COL_COUNT&gt;1&lt;/COL_COUNT&gt;&lt;DISPLAY_AS_TEXT/&gt;&lt;HOTKEY&gt;00&lt;/HOTKEY&gt;&lt;IMAGE_SOURCE/&gt;&lt;KEY_VISIBLE/&gt;&lt;LINK_DESIGN&gt;00&lt;/LINK_DESIGN&gt;&lt;LINK_TYPE&gt;02&lt;/LINK_TYPE&gt;&lt;MAX_TICK_MARKS&gt;0&lt;/MAX_TICK_MARKS&gt;&lt;MIME_TYPE/&gt;&lt;PASSWORD_FIELD/&gt;&lt;ROW_COUNT&gt;5&lt;/ROW_COUNT&gt;&lt;SHOW_TICK_MARKS/&gt;&lt;SUGGEST_VALUES/&gt;&lt;TARGET/&gt;&lt;TEXT_DOCUMENT_NAME/&gt;&lt;TEXT_VIEW_DESIGN&gt;09&lt;/TEXT_VIEW_DESIGN&gt;&lt;TEXT_VIEW_LAYOUT&gt;01&lt;/TEXT_VIEW_LAYOUT&gt;&lt;TEXTVIEW_SEM_COL&gt;00&lt;/TEXTVIEW_SEM_COL&gt;&lt;TEXT_WRAPPING&gt;02&lt;/TEXT_WRAPPING&gt;&lt;THRESHOLDS/&gt;&lt;TICK_MARK_SPACING&gt;0&lt;/TICK_MARK_SPACING&gt;&lt;UNIT_WIDTH&gt;0&lt;/UNIT_WIDTH&gt;&lt;WIDTH/&gt;&lt;WRAPPING/&gt;&lt;/BN1&gt;&lt;/asx:values&gt;&lt;/asx:abap&gt;</SPECIAL_PROPERTIES>
+       <SPECIAL_ACTIONS/>
+       <LABEL_TEXT Transl="true"/>
+       <LABEL_VISIBILITY>02</LABEL_VISIBILITY>
+       <TAG_ACTIVE/>
+       <CTXT_MENU_ID/>
+      </Item>
+     </Node>
+    </Item>
+   </Node>
+  </Item>
+ </Node>
+</Component>

@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>주소 입력</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZKR_POSTCODEI01</SOBJ_NAME>
+    <SOBJ_NAME>LZKR_POSTCODEO01</SOBJ_NAME>
+    <SOBJ_NAME>LZKR_POSTCODETOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZKR_POSTCODE</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZKR_POSTCODE_EXIT</FUNCNAME>
+     <SHORT_TEXT>Example for a search help exit</SHORT_TEXT>
+     <CHANGING>
+      <RSCHA>
+       <PARAMETER>SHLP</PARAMETER>
+       <TYP>SHLP_DESCR</TYP>
+      </RSCHA>
+      <RSCHA>
+       <PARAMETER>CALLCONTROL</PARAMETER>
+       <DBFIELD>DDSHF4CTRL</DBFIELD>
+      </RSCHA>
+     </CHANGING>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>SHLP_TAB</PARAMETER>
+       <TYP>SHLP_DESCT</TYP>
+      </RSTBL>
+      <RSTBL>
+       <PARAMETER>RECORD_TAB</PARAMETER>
+       <DBSTRUCT>SEAHLPRES</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>SHLP_TAB</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Table of elementary search helps</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>RECORD_TAB</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Hit list</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>SHLP</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Single (current) search help</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>CALLCONTROL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Control of the F4 process</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+   <DYNPROS>
+    <item>
+     <HEADER>
+      <PROGRAM>SAPLZKR_POSTCODE</PROGRAM>
+      <SCREEN>1000</SCREEN>
+      <LANGUAGE>E</LANGUAGE>
+      <DESCRIPT>dummy</DESCRIPT>
+      <TYPE>N</TYPE>
+      <NEXTSCREEN>1000</NEXTSCREEN>
+      <LINES>027</LINES>
+      <COLUMNS>120</COLUMNS>
+      <NO_TOOLBAR>X</NO_TOOLBAR>
+     </HEADER>
+     <CONTAINERS>
+      <RPY_DYCATT>
+       <TYPE>SCREEN</TYPE>
+       <NAME>SCREEN</NAME>
+      </RPY_DYCATT>
+     </CONTAINERS>
+     <FIELDS>
+      <RPY_DYFATC>
+       <CONT_TYPE>SCREEN</CONT_TYPE>
+       <CONT_NAME>SCREEN</CONT_NAME>
+       <TYPE>OKCODE</TYPE>
+       <TEXT>____________________</TEXT>
+       <LENGTH>020</LENGTH>
+       <VISLENGTH>020</VISLENGTH>
+       <HEIGHT>001</HEIGHT>
+       <FORMAT>CHAR</FORMAT>
+       <INPUT_FLD>X</INPUT_FLD>
+      </RPY_DYFATC>
+     </FIELDS>
+     <FLOW_LOGIC>
+      <RPY_DYFLOW>
+       <LINE>PROCESS BEFORE OUTPUT.</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW>
+       <LINE>  MODULE pbo_1000.</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW/>
+      <RPY_DYFLOW>
+       <LINE>PROCESS AFTER INPUT.</LINE>
+      </RPY_DYFLOW>
+      <RPY_DYFLOW>
+       <LINE>  MODULE user_command_1000.</LINE>
+      </RPY_DYFLOW>
+     </FLOW_LOGIC>
+    </item>
+   </DYNPROS>
+   <CUA>
+    <ADM>
+     <ACTCODE>1</ACTCODE>
+    </ADM>
+    <TIT>
+     <RSMPE_TITT>
+      <CODE>1000</CODE>
+      <TEXT>Address</TEXT>
+     </RSMPE_TITT>
+    </TIT>
+   </CUA>
+  </asx:values>
+ </asx:abap>
+</abapGit>

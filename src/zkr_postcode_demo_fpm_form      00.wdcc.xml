@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_WDCC" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <OBJECT_NAME>ZKR_POSTCODE_DEMO_FPM_FORM      00</OBJECT_NAME>
+   <CONFIG_ID>ZKR_POSTCODE_DEMO_FPM_FORM</CONFIG_ID>
+   <WDA_COMPONENT>FPM_FORM_UIBB_GL2</WDA_COMPONENT>
+   <OTR_TEXT>
+    <WDY_CONFIG_COMPT>
+     <CONFIG_ID>ZKR_POSTCODE_DEMO_FPM_FORM</CONFIG_ID>
+     <LANGU>E</LANGU>
+     <TEXT_ID>1</TEXT_ID>
+     <DESCRIPTION>우편번호 입력</DESCRIPTION>
+    </WDY_CONFIG_COMPT>
+   </OTR_TEXT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

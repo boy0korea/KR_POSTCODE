@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SICF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <URL>/sap/bc/webdynpro/sap/B40300000001035/</URL>
+   <ICFSERVICE>
+    <ICF_NAME>B40300000001035</ICF_NAME>
+    <ORIG_NAME>B40300000001035</ORIG_NAME>
+    <ICFALTNME>ZKR_POSTCODE_DEMO_FPM</ICFALTNME>
+   </ICFSERVICE>
+   <ICFDOCU>
+    <ICF_NAME>B40300000001035</ICF_NAME>
+    <ICF_LANGU>E</ICF_LANGU>
+    <ICF_DOCU>Web Dynpro Application ZKR_POSTCODE_DEMO_FPM / Component FPM_OVP_COMPONENT</ICF_DOCU>
+   </ICFDOCU>
+  </asx:values>
+ </asx:abap>
+</abapGit>
