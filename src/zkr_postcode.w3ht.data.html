@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ìš°íŽ¸ë²ˆí˜¸ ìž…ë ¥</title>
+  <title>우편번호 입력</title>
 </head>
 <body>
 <div id="wrap" style="display:none;border:1px solid;width:100%;height:100%;margin:5px 0;position:relative">
-<img src="http://t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="ì ‘ê¸° ë²„íŠ¼">
+<img src="http://t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
 </div>
 <form id="post" method="post" action=""><input id="return" type="hidden" name="return" value=""></form>
 <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-    // ìš°íŽ¸ë²ˆí˜¸ ì°¾ê¸° ì°¾ê¸° í™”ë©´ì„ ë„£ì„ element
+    // 우편번호 찾기 찾기 화면을 넣을 element
     var element_wrap = document.getElementById('wrap');
     var element_post = document.getElementById('post');
     var element_return = document.getElementById('return');
-    // ì›¹ë”˜ resumeUrl
+    // 웹딘 resumeUrl
     //var resumeUrl = '<%= request->get_form_field( `sap-wd-resumeurl` )%>';
     //resumeUrl = decodeURIComponent(resumeUrl);
     //if (resumeUrl != "") {
@@ -23,25 +23,25 @@
       element_post.action = 'SAPEVENT:RETURN';
     //}
     function foldDaumPostcode() {
-        // ì›¹ë”˜ìœ¼ë¡œ ëŒì•„ê°„ë‹¤.
+        // 웹딘으로 돌아간다.
         element_post.submit();
     }
     function sample3_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // ê²€ìƒ‰ê²°ê³¼ í•­ëª©ì„ í´ë¦­í–ˆì„ë•Œ ì‹¤í–‰í•  ì½”ë“œë¥¼ ìž‘ì„±í•˜ëŠ” ë¶€ë¶„.
-                // ì›¹ë”˜ìœ¼ë¡œ ëŒì•„ê°„ë‹¤.
+                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // 웹딘으로 돌아간다.
                 element_return.value = JSON.stringify(data);
                 element_post.submit();
             },
-            // ìš°íŽ¸ë²ˆí˜¸ ì°¾ê¸° í™”ë©´ í¬ê¸°ê°€ ì¡°ì •ë˜ì—ˆì„ë•Œ ì‹¤í–‰í•  ì½”ë“œë¥¼ ìž‘ì„±í•˜ëŠ” ë¶€ë¶„. iframeì„ ë„£ì€ elementì˜ ë†’ì´ê°’ì„ ì¡°ì •í•œë‹¤.
+            // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
             onresize : function(size) {
                 element_wrap.style.height = size.height+'px';
             },
             width : '100%',
             height : '100%'
         }).embed(element_wrap);
-        // iframeì„ ë„£ì€ elementë¥¼ ë³´ì´ê²Œ í•œë‹¤.
+        // iframe을 넣은 element를 보이게 한다.
         element_wrap.style.display = 'block';
     }
     sample3_execDaumPostcode();
