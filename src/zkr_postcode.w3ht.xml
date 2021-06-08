@@ -8,6 +8,12 @@
     <WWWPARAMS>
      <RELID>HT</RELID>
      <OBJID>ZKR_POSTCODE</OBJID>
+     <NAME>fileextension</NAME>
+     <VALUE>.html</VALUE>
+    </WWWPARAMS>
+    <WWWPARAMS>
+     <RELID>HT</RELID>
+     <OBJID>ZKR_POSTCODE</OBJID>
      <NAME>filename</NAME>
      <VALUE>ZKR_POSTCODE.html</VALUE>
     </WWWPARAMS>
@@ -16,12 +22,6 @@
      <OBJID>ZKR_POSTCODE</OBJID>
      <NAME>mimetype</NAME>
      <VALUE>text/html</VALUE>
-    </WWWPARAMS>
-    <WWWPARAMS>
-     <RELID>HT</RELID>
-     <OBJID>ZKR_POSTCODE</OBJID>
-     <NAME>fileextension</NAME>
-     <VALUE>.html</VALUE>
     </WWWPARAMS>
    </PARAMS>
   </asx:values>
