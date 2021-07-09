@@ -6,7 +6,7 @@
    <STARTING_FOLDER>/src/</STARTING_FOLDER>
    <FOLDER_LOGIC>PREFIX</FOLDER_LOGIC>
    <IGNORE>
-    <item>/src/*.sicf.xml</item>
+    <item>*.sicf.xml</item>
    </IGNORE>
   </DATA>
  </asx:values>

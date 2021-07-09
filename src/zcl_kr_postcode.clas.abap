@@ -7,48 +7,48 @@ public section.
 
   types:
     BEGIN OF ts_addr,
-          kr60                    TYPE text60,  " STREET 필드용 길이 60자
-          kr40                    TYPE text40,  " CITY 필드용 길이 40자
-          en60                    TYPE text60,  " STREET 필드용 길이 60자 (영문)
-          en40                    TYPE text40,  " CITY 필드용 길이 40자 (영문)
-          kr_old60                TYPE text60,  " STREET 필드용 길이 60자 (구주소)
-          kr_old40                TYPE text40,  " CITY 필드용 길이 40자 (구주소)
-          zonecode                TYPE string,  " 우편번호
-          address                 TYPE string,
-          addressenglish          TYPE string,
-          addresstype             TYPE string,
-          userselectedtype        TYPE string,
-          noselected              TYPE string,
-          userlanguagetype        TYPE string,
-          roadaddress             TYPE string,  " 도로명 주소
-          roadaddressenglish      TYPE string,  " 도로명 주소 (영문)
-          jibunaddress            TYPE string,
-          jibunaddressenglish     TYPE string,
-          autoroadaddress         TYPE string,
-          autoroadaddressenglish  TYPE string,
-          autojibunaddress        TYPE string,
-          autojibunaddressenglish TYPE string,
-          buildingcode            TYPE string,
-          buildingname            TYPE string,
-          apartment               TYPE string,
-          sido                    TYPE string,
-          sidoenglish             TYPE string,
-          sigungu                 TYPE string,
-          sigunguenglish          TYPE string,
-          sigungucode             TYPE string,
-          roadnamecode            TYPE string,
-          bcode                   TYPE string,
-          roadname                TYPE string,
-          roadnameenglish         TYPE string,
-          bname                   TYPE string,
-          bnameenglish            TYPE string,
-          bname1                  TYPE string,
-          bname1english           TYPE string,
-          bname2                  TYPE string,
-          bname2english           TYPE string,
-          hname                   TYPE string,
-          query                   TYPE string,
-        END OF ts_addr .
+        kr60                    TYPE text60,  " STREET 필드용 길이 60자
+        kr40                    TYPE text40,  " CITY 필드용 길이 40자
+        en60                    TYPE text60,  " STREET 필드용 길이 60자 (영문)
+        en40                    TYPE text40,  " CITY 필드용 길이 40자 (영문)
+        kr_old60                TYPE text60,  " STREET 필드용 길이 60자 (구주소)
+        kr_old40                TYPE text40,  " CITY 필드용 길이 40자 (구주소)
+        zonecode                TYPE string,  " 우편번호
+        address                 TYPE string,
+        addressenglish          TYPE string,
+        addresstype             TYPE string,
+        userselectedtype        TYPE string,
+        noselected              TYPE string,
+        userlanguagetype        TYPE string,
+        roadaddress             TYPE string,  " 도로명 주소
+        roadaddressenglish      TYPE string,  " 도로명 주소 (영문)
+        jibunaddress            TYPE string,
+        jibunaddressenglish     TYPE string,
+        autoroadaddress         TYPE string,
+        autoroadaddressenglish  TYPE string,
+        autojibunaddress        TYPE string,
+        autojibunaddressenglish TYPE string,
+        buildingcode            TYPE string,
+        buildingname            TYPE string,
+        apartment               TYPE string,
+        sido                    TYPE string,
+        sidoenglish             TYPE string,
+        sigungu                 TYPE string,
+        sigunguenglish          TYPE string,
+        sigungucode             TYPE string,
+        roadnamecode            TYPE string,
+        bcode                   TYPE string,
+        roadname                TYPE string,
+        roadnameenglish         TYPE string,
+        bname                   TYPE string,
+        bnameenglish            TYPE string,
+        bname1                  TYPE string,
+        bname1english           TYPE string,
+        bname2                  TYPE string,
+        bname2english           TYPE string,
+        hname                   TYPE string,
+        query                   TYPE string,
+      END OF ts_addr .
 
   constants GC_BSP_ID type STRING value 'ZKR_POSTCODE' ##NO_TEXT.
   constants GC_RETURN type STRING value 'RETURN' ##NO_TEXT.
@@ -58,6 +58,19 @@ public section.
     exporting
       value(IS_ADDR) type ZCL_KR_POSTCODE=>TS_ADDR .
 
+  class-methods GUI_START
+    importing
+      !IO_EVENT_HANDLER type ref to ZIF_KR_POSTCODE_EVENT
+      !IV_FULL_SCREEN type FLAG optional
+    returning
+      value(RO_POSTCODE) type ref to ZCL_KR_POSTCODE .
+  class-methods WD_START2
+    importing
+      !IV_CALLBACK_ACTION type STRING
+      !IO_VIEW type ref to IF_WD_VIEW_CONTROLLER .
+  class-methods FPM_START2
+    importing
+      !IV_CALLBACK_EVENT_ID type FPM_EVENT_ID default 'ZKR_POSTCODE' .
   class-methods FPM_START .
   class-methods FPM_END
     importing
@@ -70,49 +83,43 @@ public section.
       !IO_WDEVENT type ref to CL_WD_CUSTOM_EVENT
     returning
       value(RS_ADDR) type TS_ADDR .
-  class-methods GUI_START
-    importing
-      !IO_EVENT_HANDLER type ref to ZIF_KR_POSTCODE_EVENT
-      !IV_FULL_SCREEN type FLAG optional
-    returning
-      value(RO_POSTCODE) type ref to ZCL_KR_POSTCODE .
   methods FREE .
   methods RETURN
     importing
       !IS_ADDR type ZCL_KR_POSTCODE=>TS_ADDR optional .
-protected section.
-
-  class-methods README .
-  class-methods README_SMW0_ZKR_POSTCODE .
-  class-methods README_BSP_ZKR_POSTCODE .
-private section.
-
-  data MO_GUI_POPUP type ref to CL_GUI_DIALOGBOX_CONTAINER .
-  data MO_GUI_FULL_SCREEN type ref to CL_GUI_DOCKING_CONTAINER .
-  data MO_GUI_HTML_VIEWER type ref to CL_GUI_HTML_VIEWER .
-
-  class-methods GET_BSP_URL
-    returning
-      value(RV_URL) type STRING .
   class-methods CONVERT_JSON_TO_ADDR
     importing
       !IV_JSON type CLIKE
     returning
       value(RS_ADDR) type TS_ADDR .
-  methods GUI_INIT
-    importing
-      !IO_EVENT_HANDLER type ref to ZIF_KR_POSTCODE_EVENT
-      !IV_FULL_SCREEN type FLAG optional .
-  methods GUI_ON_CLOSE_POPUP
-    for event CLOSE of CL_GUI_DIALOGBOX_CONTAINER .
-  methods GUI_ON_SAPEVENT
-    for event SAPEVENT of CL_GUI_HTML_VIEWER
-    importing
-      !ACTION
-      !FRAME
-      !GETDATA
-      !POSTDATA
-      !QUERY_TABLE .
+  PROTECTED SECTION.
+
+    CLASS-METHODS readme .
+    CLASS-METHODS readme_smw0_zkr_postcode .
+    CLASS-METHODS readme_bsp_zkr_postcode .
+  PRIVATE SECTION.
+
+    DATA mo_gui_popup TYPE REF TO cl_gui_dialogbox_container .
+    DATA mo_gui_full_screen TYPE REF TO cl_gui_docking_container .
+    DATA mo_gui_html_viewer TYPE REF TO cl_gui_html_viewer .
+
+    CLASS-METHODS get_bsp_url
+      RETURNING
+        VALUE(rv_url) TYPE string .
+    METHODS gui_init
+      IMPORTING
+        !io_event_handler TYPE REF TO zif_kr_postcode_event
+        !iv_full_screen   TYPE flag OPTIONAL .
+    METHODS gui_on_close_popup
+        FOR EVENT close OF cl_gui_dialogbox_container .
+    METHODS gui_on_sapevent
+      FOR EVENT sapevent OF cl_gui_html_viewer
+      IMPORTING
+        !action
+        !frame
+        !getdata
+        !postdata
+        !query_table .
 ENDCLASS.
 
 
@@ -120,7 +127,7 @@ ENDCLASS.
 CLASS ZCL_KR_POSTCODE IMPLEMENTATION.
 
 
-METHOD convert_json_to_addr.
+  METHOD convert_json_to_addr.
     DATA: lt_string     TYPE TABLE OF string,
           lv_string     TYPE string,
           lv_json_name  TYPE string,
@@ -132,62 +139,30 @@ METHOD convert_json_to_addr.
     CHECK: iv_json IS NOT INITIAL.
 
 **********************************************************************
-*    " /ui2/cl_json 이 있는 경우 사용 가능.
-*    /ui2/cl_json=>deserialize(
-*      EXPORTING
-*        json = iv_json
-*      CHANGING
-*        data = rs_addr
-*    ).
+    " /ui2/cl_json 이 있는 경우 사용 가능.
+    /ui2/cl_json=>deserialize(
+      EXPORTING
+        json = iv_json
+      CHANGING
+        data = rs_addr
+    ).
 **********************************************************************
-*    " /ui2/cl_json 이 없는 경우 대체 코드.
-    lv_string = iv_json.
-    REPLACE '{"' IN lv_string WITH ''.
-    REPLACE '"}' IN lv_string WITH ''.
-    SPLIT lv_string AT '","' INTO TABLE lt_string.
-    LOOP AT lt_string INTO lv_string.
-      SPLIT lv_string AT '":"' INTO lv_json_name lv_json_value.
-      CONDENSE: lv_json_name, lv_json_value.
-      TRANSLATE lv_json_name TO UPPER CASE.
-      ASSIGN COMPONENT lv_json_name OF STRUCTURE rs_addr TO <lv_data>.
-      CHECK: sy-subrc EQ 0.
-      <lv_data> = lv_json_value.
-    ENDLOOP.
+**    " /ui2/cl_json 이 없는 경우 대체 코드.
+*    lv_string = iv_json.
+*    REPLACE '{"' IN lv_string WITH ''.
+*    REPLACE '"}' IN lv_string WITH ''.
+*    SPLIT lv_string AT '","' INTO TABLE lt_string.
+*    LOOP AT lt_string INTO lv_string.
+*      SPLIT lv_string AT '":"' INTO lv_json_name lv_json_value.
+*      CONDENSE: lv_json_name, lv_json_value.
+*      TRANSLATE lv_json_name TO UPPER CASE.
+*      ASSIGN COMPONENT lv_json_name OF STRUCTURE rs_addr TO <lv_data>.
+*      CHECK: sy-subrc EQ 0.
+*      <lv_data> = lv_json_value.
+*    ENDLOOP.
 **********************************************************************
 
     " 추가 필드 = 60 + 40 = street + city
-    lv_pivot = rs_addr-sigungu.
-    IF lv_pivot IS INITIAL.
-      lv_pivot = rs_addr-sido.
-    ENDIF.
-    IF lv_pivot CA space.
-      " 두 단어이면 뒤에꺼. 예: 성남시 분당구
-      SPLIT lv_pivot AT space INTO lv_dummy lv_pivot.
-    ENDIF.
-
-    SPLIT rs_addr-roadaddress AT lv_pivot INTO rs_addr-kr60 rs_addr-kr40.
-    CONDENSE: rs_addr-kr60, rs_addr-kr40.
-    IF strlen( rs_addr-kr60 ) + strlen( lv_pivot ) + 1 <= 60.
-      " 시도+시군구 / 도로명
-      CONCATENATE rs_addr-kr60 lv_pivot INTO rs_addr-kr60 SEPARATED BY space.
-    ELSE.
-      " 시도 / 시군구+도로명
-      CONCATENATE lv_pivot rs_addr-kr40 INTO rs_addr-kr40 SEPARATED BY space.
-    ENDIF.
-    CONDENSE: rs_addr-kr60, rs_addr-kr40.
-
-    SPLIT rs_addr-jibunaddress AT lv_pivot INTO rs_addr-kr_old60 rs_addr-kr_old40.
-    CONDENSE: rs_addr-kr_old60, rs_addr-kr_old40.
-    IF strlen( rs_addr-kr_old60 ) + strlen( lv_pivot ) + 1 <= 60.
-      " 시도+시군구 / 동 이하
-      CONCATENATE rs_addr-kr_old60 lv_pivot INTO rs_addr-kr_old60 SEPARATED BY space.
-    ELSE.
-      " 시도 / 시군구+동 이하
-      CONCATENATE lv_pivot rs_addr-kr_old40 INTO rs_addr-kr_old40 SEPARATED BY space.
-    ENDIF.
-    CONDENSE: rs_addr-kr_old60, rs_addr-kr_old40.
-
-
     lv_pivot = rs_addr-sigunguenglish.
     IF lv_pivot IS INITIAL.
       lv_pivot = rs_addr-sidoenglish.
@@ -210,11 +185,43 @@ METHOD convert_json_to_addr.
     CONDENSE: rs_addr-en60, rs_addr-en40.
 
 
+    " 한글은 = 40 + 60 = city + street
+    lv_pivot = rs_addr-sigungu.
+    IF lv_pivot IS INITIAL.
+      lv_pivot = rs_addr-sido.
+    ENDIF.
+    IF lv_pivot CA space.
+      " 두 단어이면 뒤에꺼. 예: 성남시 분당구
+      SPLIT lv_pivot AT space INTO lv_dummy lv_pivot.
+    ENDIF.
+
+    SPLIT rs_addr-roadaddress AT lv_pivot INTO rs_addr-kr40 rs_addr-kr60.
+    CONDENSE: rs_addr-kr40, rs_addr-kr60.
+    IF strlen( rs_addr-kr40 ) + strlen( lv_pivot ) + 1 <= 40.
+      " 시도+시군구 / 도로명
+      CONCATENATE rs_addr-kr40 lv_pivot INTO rs_addr-kr40 SEPARATED BY space.
+    ELSE.
+      " 시도 / 시군구+도로명
+      CONCATENATE lv_pivot rs_addr-kr60 INTO rs_addr-kr60 SEPARATED BY space.
+    ENDIF.
+    CONDENSE: rs_addr-kr40, rs_addr-kr40.
+
+    SPLIT rs_addr-jibunaddress AT lv_pivot INTO rs_addr-kr_old40 rs_addr-kr_old60.
+    CONDENSE: rs_addr-kr_old40, rs_addr-kr_old60.
+    IF strlen( rs_addr-kr_old40 ) + strlen( lv_pivot ) + 1 <= 40.
+      " 시도+시군구 / 동 이하
+      CONCATENATE rs_addr-kr_old40 lv_pivot INTO rs_addr-kr_old40 SEPARATED BY space.
+    ELSE.
+      " 시도 / 시군구+동 이하
+      CONCATENATE lv_pivot rs_addr-kr_old60 INTO rs_addr-kr_old60 SEPARATED BY space.
+    ENDIF.
+    CONDENSE: rs_addr-kr_old40, rs_addr-kr_old60.
+
 
   ENDMETHOD.                    "convert_json_to_addr
 
 
-METHOD fpm_end.
+  METHOD fpm_end.
     DATA: lt_param TYPE tihttpnvp,
           ls_param TYPE ihttpnvp,
           lv_json  TYPE string.
@@ -237,7 +244,7 @@ METHOD fpm_end.
   ENDMETHOD.                    "fpm_end
 
 
-METHOD fpm_start.
+  METHOD fpm_start.
     DATA: ls_url_fields TYPE fpm_s_launch_url.
 
     ls_url_fields-url = get_bsp_url( ).
@@ -249,7 +256,7 @@ METHOD fpm_start.
   ENDMETHOD.                    "fpm_start
 
 
-METHOD free.
+  METHOD free.
     IF mo_gui_html_viewer IS NOT INITIAL.
       mo_gui_html_viewer->free( ).
     ENDIF.
@@ -265,7 +272,7 @@ METHOD free.
   ENDMETHOD.                    "free
 
 
-METHOD get_bsp_url.
+  METHOD get_bsp_url.
     DATA: lv_bsp_id TYPE bxmnodes-url,
           lv_url    TYPE bxurlg-gen_url.
 
@@ -282,7 +289,7 @@ METHOD get_bsp_url.
   ENDMETHOD.                    "get_bsp_url
 
 
-METHOD gui_init.
+  METHOD gui_init.
     DATA: lo_parent   TYPE REF TO cl_gui_container,
           lt_event    TYPE cntl_simple_events,
           ls_event    TYPE cntl_simple_event,
@@ -329,15 +336,15 @@ METHOD gui_init.
 
 
 **********************************************************************
-    " 이 부분을 주석처리하면 GUI에서는 BSP 사용안함.						
-    CALL FUNCTION 'TH_GET_VIRT_HOST_DATA'
-      EXPORTING
-        protocol = 0
-        virt_idx = 0
-      IMPORTING
-        hostname = lv_hostname
-      EXCEPTIONS
-        OTHERS   = 3.
+*    " 이 부분을 주석처리하면 GUI에서는 BSP 사용안함.
+*    CALL FUNCTION 'TH_GET_VIRT_HOST_DATA'
+*      EXPORTING
+*        protocol = 0
+*        virt_idx = 0
+*      IMPORTING
+*        hostname = lv_hostname
+*      EXCEPTIONS
+*        OTHERS   = 3.
 **********************************************************************
 
     IF lv_hostname CA '.'.
@@ -373,12 +380,12 @@ METHOD gui_init.
   ENDMETHOD.                    "gui_init
 
 
-METHOD gui_on_close_popup.
+  METHOD gui_on_close_popup.
     return( ).
   ENDMETHOD.                    "gui_on_close_popup
 
 
-METHOD gui_on_sapevent.
+  METHOD gui_on_sapevent.
     DATA: lv_json TYPE string,
           ls_addr TYPE ts_addr.
 
@@ -395,7 +402,7 @@ METHOD gui_on_sapevent.
   ENDMETHOD.                    "gui_on_sapevent
 
 
-METHOD gui_start.
+  METHOD GUI_START.
     CREATE OBJECT ro_postcode.
 
     ro_postcode->gui_init(
@@ -406,12 +413,12 @@ METHOD gui_start.
   ENDMETHOD.                    "gui_start
 
 
-METHOD readme.
+  METHOD readme.
 **********************************************************************
 * 설명서
 **********************************************************************
-* 배포처: https://boy0.tistory.com/164
-* 버전: 1.2 (2021.04.01)
+* 배포처: https://github.com/boy0korea/KR_POSTCODE
+* 버전: 2.0 (2021.07.09)
 * 참고: 다음 우편번호 API - Daum
 *       https://postcode.map.daum.net/guide
 
@@ -446,23 +453,37 @@ METHOD readme.
 **********************************************************************
     " for FPM
     " 시작:
-    zcl_kr_postcode=>fpm_start( ).
-    " 종료: FPM_RESUME 이벤트 일때 호출하세요.
-    DATA: lo_fpm_event TYPE REF TO cl_fpm_event.
-    ls_addr = zcl_kr_postcode=>fpm_end( io_event = lo_fpm_event ).
+    zcl_kr_postcode=>fpm_start2(
+        iv_callback_event_id = 'ZKR_POSTCODE'
+    ).
+    " 종료: iv_callback_event_id 에서 입력한 이벤트 일때 구현하세요.
+    DATA: io_event TYPE REF TO cl_fpm_event.
+    io_event->mo_event_data->get_value(
+      EXPORTING
+        iv_key   = 'IS_ADDR'
+      IMPORTING
+        ev_value = ls_addr
+    ).
     " 데모: ZKR_POSTCODE_DEMO_FPM
-    CALL TRANSACTION 'WDYID'.
     DATA: lo_fpm_feeder TYPE REF TO zcl_kr_postcode_demo_fpm_form.
 
 
     " for WD
     " 시작:
-    zcl_kr_postcode=>wd_start( ).
-    " 종료: inbound PLUG RESUME 에서 호출하세요.
-    DATA: lo_wdevent TYPE REF TO cl_wd_custom_event.
-    ls_addr = zcl_kr_postcode=>wd_end( io_wdevent = lo_wdevent ).
+    zcl_kr_postcode=>wd_start2(
+      EXPORTING
+        iv_callback_action = 'ZKR_POSTCODE'
+        io_view            = wdr_task=>application->focused_view_element->get_view( ) " wd_ths->wd_get_api( )
+    ).
+    " 종료: iv_callback_action 에서 입력한 ACTION에 구현하세요.
+    DATA: wdevent TYPE REF TO cl_wd_custom_event.
+    wdevent->get_data(
+      EXPORTING
+        name  = 'IS_ADDR'
+      IMPORTING
+        value = ls_addr
+    ).
     " 데모: ZKR_POSTCODE_DEMO_WD
-    CALL TRANSACTION 'WDYID'.
 
 
     " for SAP GUI
@@ -483,16 +504,16 @@ METHOD readme.
 
     " search help: ZH_KR_POSTCODE
     DEFINE sh.
-      parameters: p_x type ad_pstcd1 matchcode object zh_kr_postcode.
+      PARAMETERS: p_x TYPE ad_pstcd1 MATCHCODE OBJECT zh_kr_postcode.
     END-OF-DEFINITION.
 
 
 **********************************************************************
 * 기타 설명
 **********************************************************************
-    " BSP 필요함.
-    readme_bsp_zkr_postcode( ).
-    " Web Object 업로드 필요함.
+*    " BSP 필요함.  ---> 2.0 에서는 필요없음.
+*    readme_bsp_zkr_postcode( ).
+    " Web Object 업로드 필요함. --> abapGit 사용으로 자동 추가 됨.
     readme_smw0_zkr_postcode( ).
 
 
@@ -500,14 +521,15 @@ METHOD readme.
 * 버전별 변경 기록
 **********************************************************************
 * 1.0 (2021.03.30) 최초 공개
-* 1.1 (2021.03.31) /ui2/cl_json=>deserialize( ) 부분 주석처리
-*                  BSP page에서 상단에 back 버튼 추가
+* 1.1 (2021.03.31) BSP page에서 상단에 back 버튼 추가
 * 1.2 (2021.04.01) 지번주소 60자,40자 필드 추가
+* 2.0 (2021.07.09) 스탠다드 주소 입력 부분 enhancement 추가
+*                  WD 와 FPM 내부팝업 형태로 변경한 version 2 추가
 
   ENDMETHOD.                    "readme
 
 
-METHOD readme_bsp_zkr_postcode.
+  METHOD readme_bsp_zkr_postcode.
     ASSERT 1 = 0.
 * BSP: ZKR_POSTCODE , Page: default.htm 을 만들어 주세요.
 
@@ -567,7 +589,7 @@ METHOD readme_bsp_zkr_postcode.
   ENDMETHOD.                    "README_SMW0_ZKR_POSTCODE
 
 
-METHOD readme_smw0_zkr_postcode.
+  METHOD readme_smw0_zkr_postcode.
     ASSERT 1 = 0.
 * 티코드 SMW0 에서 object = ZKR_POSTCODE 를 만들어서 첨부 파일 업로드해야 함.
 
@@ -580,30 +602,20 @@ METHOD readme_smw0_zkr_postcode.
 *<div id="wrap" style="display:none;border:1px solid;width:100%;height:100%;margin:5px 0;position:relative">
 *<img src="http://t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
 *</div>
-*<form id="post" method="post" action=""><input id="return" type="hidden" name="return" value=""></form>
+*<form id="post" method="post" action="SAPEVENT:RETURN"><input id="return" type="hidden" name="return" value=""></form>
 *<script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 *<script>
 *    // 우편번호 찾기 찾기 화면을 넣을 element
 *    var element_wrap = document.getElementById('wrap');
 *    var element_post = document.getElementById('post');
 *    var element_return = document.getElementById('return');
-*    // 웹딘 resumeUrl
-*    //var resumeUrl = '<%= request->get_form_field( `sap-wd-resumeurl` )%>';
-*    //resumeUrl = decodeURIComponent(resumeUrl);
-*    //if (resumeUrl != "") {
-*    //  element_post.action = resumeUrl;
-*    //} else {
-*      element_post.action = 'SAPEVENT:RETURN';
-*    //}
 *    function foldDaumPostcode() {
-*        // 웹딘으로 돌아간다.
 *        element_post.submit();
 *    }
 *    function sample3_execDaumPostcode() {
 *        new daum.Postcode({
 *            oncomplete: function(data) {
 *                // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-*                // 웹딘으로 돌아간다.
 *                element_return.value = JSON.stringify(data);
 *                element_post.submit();
 *            },
@@ -624,7 +636,7 @@ METHOD readme_smw0_zkr_postcode.
   ENDMETHOD.                    "README_SMW0_ZKR_POSTCODE
 
 
-METHOD return.
+  METHOD return.
     ms_addr = is_addr.
     RAISE EVENT gui_select
       EXPORTING
@@ -633,7 +645,7 @@ METHOD return.
   ENDMETHOD.                    "return
 
 
-METHOD wd_end.
+  METHOD wd_end.
     DATA: lv_json TYPE string.
 
     lv_json = io_wdevent->get_string( gc_return ).
@@ -642,7 +654,7 @@ METHOD wd_end.
   ENDMETHOD.                    "wd_end
 
 
-METHOD wd_start.
+  METHOD wd_start.
     DATA: ls_plug    TYPE wdy_rr_iobound_plug,
           ls_viewman TYPE wdr_viewman_line,
           lo_viewman TYPE REF TO cl_wdr_view_manager,
@@ -670,5 +682,19 @@ METHOD wd_start.
         parameters    = lt_param
     ).
 
+  ENDMETHOD.                    "wd_start
+
+
+  METHOD FPM_START2.
+    zcl_zkr_postcode_v2=>fpm_popup( iv_callback_event_id ).
+  ENDMETHOD.
+
+
+  METHOD WD_START2.
+    zcl_zkr_postcode_v2=>wd_popup(
+      EXPORTING
+        iv_callback_action = iv_callback_action
+        io_view            = io_view
+    ).
   ENDMETHOD.                    "wd_start
 ENDCLASS.

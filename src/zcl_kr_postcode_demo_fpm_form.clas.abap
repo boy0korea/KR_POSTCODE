@@ -1,21 +1,21 @@
-class ZCL_KR_POSTCODE_DEMO_FPM_FORM definition
-  public
-  final
-  create public .
+CLASS zcl_kr_postcode_demo_fpm_form DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces IF_FPM_GUIBB .
-  interfaces IF_FPM_GUIBB_FORM .
+    INTERFACES if_fpm_guibb .
+    INTERFACES if_fpm_guibb_form .
 
-  types:
-    BEGIN OF ts_address,
+    TYPES:
+      BEGIN OF ts_address,
         zonecode     TYPE string,
         roadaddress  TYPE string,
         jibunaddress TYPE string,
       END OF ts_address .
-protected section.
-private section.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -23,38 +23,43 @@ ENDCLASS.
 CLASS ZCL_KR_POSTCODE_DEMO_FPM_FORM IMPLEMENTATION.
 
 
-METHOD if_fpm_guibb_form~check_config.
+  METHOD if_fpm_guibb_form~check_config.
   ENDMETHOD.                    "IF_FPM_GUIBB_FORM~CHECK_CONFIG
 
 
-METHOD if_fpm_guibb_form~flush.
+  METHOD if_fpm_guibb_form~flush.
   ENDMETHOD.                    "IF_FPM_GUIBB_FORM~FLUSH
 
 
-METHOD if_fpm_guibb_form~get_data.
+  METHOD if_fpm_guibb_form~get_data.
     DATA: ls_addr TYPE zcl_kr_postcode=>ts_addr.
 
 
     CASE io_event->mv_event_id.
       WHEN 'ADDR'.
-        zcl_kr_postcode=>fpm_start( ).
+        " input address
+        zcl_kr_postcode=>fpm_start2( ).
 
-      WHEN 'FPM_RESUME'.
+      WHEN 'ZKR_POSTCODE'.
+        " return address
         ev_data_changed = abap_true.
-        ls_addr = zcl_kr_postcode=>fpm_end( io_event = io_event ).
-        CHECK: ls_addr IS NOT INITIAL. " 비어있으면 닫기임.
-
+        io_event->mo_event_data->get_value(
+          EXPORTING
+            iv_key   = 'IS_ADDR'
+          IMPORTING
+            ev_value = ls_addr
+        ).
         MOVE-CORRESPONDING ls_addr TO cs_data.
 
     ENDCASE.
   ENDMETHOD.                    "IF_FPM_GUIBB_FORM~GET_DATA
 
 
-METHOD if_fpm_guibb_form~get_default_config.
+  METHOD if_fpm_guibb_form~get_default_config.
   ENDMETHOD.                    "IF_FPM_GUIBB_FORM~GET_DEFAULT_CONFIG
 
 
-METHOD if_fpm_guibb_form~get_definition.
+  METHOD if_fpm_guibb_form~get_definition.
     DATA: ls_address           TYPE ts_address,
           ls_comp              TYPE abap_compdescr,
           ls_field_description TYPE fpmgb_s_formfield_descr,
@@ -80,15 +85,14 @@ METHOD if_fpm_guibb_form~get_definition.
   ENDMETHOD.                    "if_fpm_guibb_form~get_definition
 
 
-METHOD if_fpm_guibb_form~process_event.
-
+  METHOD if_fpm_guibb_form~process_event.
   ENDMETHOD.                    "IF_FPM_GUIBB_FORM~PROCESS_EVENT
 
 
-METHOD if_fpm_guibb~get_parameter_list.
+  METHOD if_fpm_guibb~get_parameter_list.
   ENDMETHOD.                    "IF_FPM_GUIBB~GET_PARAMETER_LIST
 
 
-METHOD if_fpm_guibb~initialize.
+  METHOD if_fpm_guibb~initialize.
   ENDMETHOD.                    "IF_FPM_GUIBB~INITIALIZE
 ENDCLASS.
