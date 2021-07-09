@@ -4,6 +4,7 @@
   <asx:values>
    <AREAT>주소 입력</AREAT>
    <INCLUDES>
+    <SOBJ_NAME>LZKR_POSTCODEF01</SOBJ_NAME>
     <SOBJ_NAME>LZKR_POSTCODEI01</SOBJ_NAME>
     <SOBJ_NAME>LZKR_POSTCODEO01</SOBJ_NAME>
     <SOBJ_NAME>LZKR_POSTCODETOP</SOBJ_NAME>
@@ -12,7 +13,7 @@
    <FUNCTIONS>
     <item>
      <FUNCNAME>ZKR_POSTCODE_EXIT</FUNCNAME>
-     <SHORT_TEXT>Example for a search help exit</SHORT_TEXT>
+     <SHORT_TEXT>search help exit</SHORT_TEXT>
      <CHANGING>
       <RSCHA>
        <PARAMETER>SHLP</PARAMETER>
@@ -56,6 +57,35 @@
       </RSFDO>
      </DOCUMENTATION>
     </item>
+    <item>
+     <FUNCNAME>ZKR_POSTCODE_OPEN</FUNCNAME>
+     <SHORT_TEXT>open</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>IV_FULL_SCREEN</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>FLAG</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>ES_ADDR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>ZCL_KR_POSTCODE=&gt;TS_ADDR</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>IV_FULL_SCREEN</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ES_ADDR</PARAMETER>
+       <KIND>P</KIND>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
    </FUNCTIONS>
    <DYNPROS>
     <item>
@@ -63,8 +93,8 @@
       <PROGRAM>SAPLZKR_POSTCODE</PROGRAM>
       <SCREEN>1000</SCREEN>
       <LANGUAGE>E</LANGUAGE>
-      <DESCRIPT>dummy</DESCRIPT>
-      <TYPE>N</TYPE>
+      <DESCRIPT>1000</DESCRIPT>
+      <TYPE>M</TYPE>
       <NEXTSCREEN>1000</NEXTSCREEN>
       <LINES>027</LINES>
       <COLUMNS>120</COLUMNS>

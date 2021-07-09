@@ -20,7 +20,7 @@
      <SOURCE>
       <item>*  * KR_POSTCODE</item>
       <item>  IF help_infos-dynpprog EQ &apos;SAPLSZA1&apos; AND</item>
-      <item>     ( help_infos-dynpro EQ &apos;0301&apos; OR help_infos-dynpro EQ &apos;0204&apos; ) AND</item>
+      <item>*     help_infos-dynpro EQ &apos;0301&apos; AND</item>
       <item>     help_infos-tabname EQ &apos;ADDR1_DATA&apos; AND</item>
       <item>     ( help_infos-fieldname EQ &apos;POST_CODE1&apos; OR help_infos-fieldname EQ &apos;STREET&apos; OR help_infos-fieldname EQ &apos;CITY1&apos; ).</item>
       <item/>
@@ -41,7 +41,7 @@
       <item>      zinterface_wa-valfield = &apos;POST_CODE1&apos;.</item>
       <item>      APPEND zinterface_wa to shlp_top-interface.</item>
       <item/>
-      <item>      IF help_infos-dynpro EQ &apos;0204&apos;. &quot; international</item>
+      <item>      IF help_infos-dynpro+2 EQ &apos;04&apos;. &quot; international</item>
       <item>        zinterface_wa-shlpfield = &apos;EN60&apos;.</item>
       <item>      ELSE.</item>
       <item>        zinterface_wa-shlpfield = &apos;KR60&apos;.</item>
@@ -50,7 +50,7 @@
       <item>      zinterface_wa-valfield = &apos;STREET&apos;.</item>
       <item>      APPEND zinterface_wa to shlp_top-interface.</item>
       <item/>
-      <item>      IF help_infos-dynpro EQ &apos;0204&apos;. &quot; international</item>
+      <item>      IF help_infos-dynpro+2 EQ &apos;04&apos;. &quot; international</item>
       <item>        zinterface_wa-shlpfield = &apos;EN40&apos;.</item>
       <item>      ELSE.</item>
       <item>        zinterface_wa-shlpfield = &apos;KR40&apos;.</item>

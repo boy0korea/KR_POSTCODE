@@ -9,12 +9,7 @@
 MODULE user_command_1000 INPUT.
   CASE sy-ucomm.
     WHEN 'BACK'.
-      IF go_postcode IS NOT INITIAL.
-        go_postcode->return( ).
-      ELSE.
-        LEAVE TO SCREEN 0.
-      ENDIF.
-
+      PERFORM do_free_and_back.
     WHEN OTHERS.
       CALL METHOD cl_gui_cfw=>dispatch.
   ENDCASE.

@@ -6,3 +6,5 @@
 
   INCLUDE lzkr_postcodei01.
   INCLUDE lzkr_postcodeo01.
+
+INCLUDE lzkr_postcodef01.
