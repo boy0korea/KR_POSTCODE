@@ -1,9 +1,9 @@
-METHOD readme.
+  METHOD readme.
 **********************************************************************
 * 설명서
 **********************************************************************
-* 배포처: https://boy0.tistory.com/164
-* 버전: 1.2 (2021.04.01)
+* 배포처: https://github.com/boy0korea/KR_POSTCODE
+* 버전: 2.0 (2021.07.09)
 * 참고: 다음 우편번호 API - Daum
 *       https://postcode.map.daum.net/guide
 
@@ -38,23 +38,37 @@ METHOD readme.
 **********************************************************************
     " for FPM
     " 시작:
-    zcl_kr_postcode=>fpm_start( ).
-    " 종료: FPM_RESUME 이벤트 일때 호출하세요.
-    DATA: lo_fpm_event TYPE REF TO cl_fpm_event.
-    ls_addr = zcl_kr_postcode=>fpm_end( io_event = lo_fpm_event ).
+    zcl_kr_postcode=>fpm_start2(
+        iv_callback_event_id = 'ZKR_POSTCODE'
+    ).
+    " 종료: iv_callback_event_id 에서 입력한 이벤트 일때 구현하세요.
+    DATA: io_event TYPE REF TO cl_fpm_event.
+    io_event->mo_event_data->get_value(
+      EXPORTING
+        iv_key   = 'IS_ADDR'
+      IMPORTING
+        ev_value = ls_addr
+    ).
     " 데모: ZKR_POSTCODE_DEMO_FPM
-    CALL TRANSACTION 'WDYID'.
     DATA: lo_fpm_feeder TYPE REF TO zcl_kr_postcode_demo_fpm_form.
 
 
     " for WD
     " 시작:
-    zcl_kr_postcode=>wd_start( ).
-    " 종료: inbound PLUG RESUME 에서 호출하세요.
-    DATA: lo_wdevent TYPE REF TO cl_wd_custom_event.
-    ls_addr = zcl_kr_postcode=>wd_end( io_wdevent = lo_wdevent ).
+    zcl_kr_postcode=>wd_start2(
+      EXPORTING
+        iv_callback_action = 'ZKR_POSTCODE'
+        io_view            = wdr_task=>application->focused_view_element->get_view( ) " wd_ths->wd_get_api( )
+    ).
+    " 종료: iv_callback_action 에서 입력한 ACTION에 구현하세요.
+    DATA: wdevent TYPE REF TO cl_wd_custom_event.
+    wdevent->get_data(
+      EXPORTING
+        name  = 'IS_ADDR'
+      IMPORTING
+        value = ls_addr
+    ).
     " 데모: ZKR_POSTCODE_DEMO_WD
-    CALL TRANSACTION 'WDYID'.
 
 
     " for SAP GUI
@@ -75,16 +89,16 @@ METHOD readme.
 
     " search help: ZH_KR_POSTCODE
     DEFINE sh.
-      parameters: p_x type ad_pstcd1 matchcode object zh_kr_postcode.
+      PARAMETERS: p_x TYPE ad_pstcd1 MATCHCODE OBJECT zh_kr_postcode.
     END-OF-DEFINITION.
 
 
 **********************************************************************
 * 기타 설명
 **********************************************************************
-    " BSP 필요함.
-    readme_bsp_zkr_postcode( ).
-    " Web Object 업로드 필요함.
+*    " BSP 필요함.  ---> 2.0 에서는 필요없음.
+*    readme_bsp_zkr_postcode( ).
+    " Web Object 업로드 필요함. --> abapGit 사용으로 자동 추가 됨.
     readme_smw0_zkr_postcode( ).
 
 
@@ -92,8 +106,9 @@ METHOD readme.
 * 버전별 변경 기록
 **********************************************************************
 * 1.0 (2021.03.30) 최초 공개
-* 1.1 (2021.03.31) /ui2/cl_json=>deserialize( ) 부분 주석처리
-*                  BSP page에서 상단에 back 버튼 추가
+* 1.1 (2021.03.31) BSP page에서 상단에 back 버튼 추가
 * 1.2 (2021.04.01) 지번주소 60자,40자 필드 추가
+* 2.0 (2021.07.09) 스탠다드 주소 입력 부분 enhancement 추가
+*                  WD 와 FPM 내부팝업 형태로 변경한 version 2 추가
 
   ENDMETHOD.                    "readme
