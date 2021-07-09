@@ -1,7 +1,7 @@
-KR_POSTCODE 는 SAP용 주소입력 API 입니다.
-다음주소API 화면을 ABAP(or WDA or FPM) 에서 호출 하고 결과를 받을 수 있습니다.
+<P>KR_POSTCODE 는 SAP용 주소입력 API 입니다.</P>
+<P>다음주소API 화면을 ABAP(or WDA or FPM) 에서 호출 하고 결과를 받을 수 있습니다.</P>
 
-스탠다드 주소 입력 부분을 enhnace 했기 때문에 KR 국가 선택시 서치헬프로 입력할 수 있습니다.
+<P>스탠다드 주소 입력 부분을 enhnace 했기 때문에 KR 국가 선택시 서치헬프로 입력할 수 있습니다.</P>
 ![image](https://user-images.githubusercontent.com/75079431/125023534-08234480-e0ba-11eb-8ed8-d6a9bbcd7bcd.png)
 ![image](https://user-images.githubusercontent.com/75079431/125023538-0a859e80-e0ba-11eb-80a7-850c63db3c94.png)
 ![image](https://user-images.githubusercontent.com/75079431/125023541-0ce7f880-e0ba-11eb-8a8b-238bec32f874.png)
