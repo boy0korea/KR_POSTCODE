@@ -98,7 +98,7 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
       TRY.
           lo_action = lo_view->get_action_internal( lv_action ).
         CATCH cx_wdr_runtime INTO DATA(lx_wdr_runtime).
-          zcl_abap2xlsx_helper=>message( lx_wdr_runtime->get_text( ) ).
+          wdr_task=>application->component->if_wd_controller~get_message_manager( )->report_error_message( lx_wdr_runtime->get_text( ) ).
       ENDTRY.
       CHECK: lo_action IS NOT INITIAL.
 
