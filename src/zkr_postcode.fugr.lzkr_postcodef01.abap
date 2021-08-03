@@ -18,28 +18,15 @@ FORM do_init .
 
   CREATE OBJECT go_event_handler.
 
-  IF gv_full_screen EQ abap_true.
-    " full screen
-    CREATE OBJECT go_gui_full_screen
-      EXPORTING
-        side      = cl_gui_docking_container=>dock_at_bottom
-        extension = cl_gui_docking_container=>ws_maximizebox
-        caption   = 'Address'.
-    lo_parent = go_gui_full_screen.
-  ELSE.
-    " popup
-    CREATE OBJECT go_gui_popup
-      EXPORTING
-        width   = 600    " Width of This Container
-        height  = 300    " Height of This Container
-        top     = 100    " Top Position of Dialog Box
-        left    = 100    " Left Position of Dialog Box
-        caption = 'Address'.
-    SET HANDLER go_event_handler->on_close_popup FOR go_gui_popup.
-    lo_parent = go_gui_popup.
-  ENDIF.
+  " full screen
+  CREATE OBJECT go_gui_full_screen
+    EXPORTING
+      side      = cl_gui_docking_container=>dock_at_bottom
+      extension = cl_gui_docking_container=>ws_maximizebox
+      caption   = 'Address'.
+  lo_parent = go_gui_full_screen.
 
-
+  " html viewer
   CREATE OBJECT go_gui_html_viewer
     EXPORTING
       parent               = lo_parent
@@ -89,24 +76,10 @@ FORM do_free_and_back .
   IF go_gui_full_screen IS NOT INITIAL.
     go_gui_full_screen->free( ).
   ENDIF.
-  IF go_gui_popup IS NOT INITIAL.
-    go_gui_popup->free( ).
-  ENDIF.
 
-  FREE: go_gui_html_viewer, go_gui_full_screen, go_gui_popup, go_event_handler.
+  FREE: go_gui_html_viewer, go_gui_full_screen, go_event_handler.
 
   LEAVE TO SCREEN 0.
-ENDFORM.
-*&---------------------------------------------------------------------*
-*& Form on_close_popup
-*&---------------------------------------------------------------------*
-*& text
-*&---------------------------------------------------------------------*
-*& -->  p1        text
-*& <--  p2        text
-*&---------------------------------------------------------------------*
-FORM on_close_popup .
-  PERFORM do_free_and_back.
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Form on_sapevent

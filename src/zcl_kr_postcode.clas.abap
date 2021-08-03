@@ -57,8 +57,6 @@ public section.
       value(IS_ADDR) type ZCL_KR_POSTCODE=>TS_ADDR .
 
   class-methods GUI_START2
-    importing
-      !IV_FULL_SCREEN type FLAG optional
     returning
       value(RS_ADDR) type ZCL_KR_POSTCODE=>TS_ADDR .
   class-methods WD_START2
@@ -189,8 +187,6 @@ CLASS ZCL_KR_POSTCODE IMPLEMENTATION.
 
   METHOD gui_start2.
     CALL FUNCTION 'ZKR_POSTCODE_OPEN'
-      EXPORTING
-        iv_full_screen = iv_full_screen
       IMPORTING
         es_addr        = rs_addr.
   ENDMETHOD.                    "gui_start
@@ -271,7 +267,7 @@ CLASS ZCL_KR_POSTCODE IMPLEMENTATION.
 
     " for SAP GUI
     " 시작:
-    ls_addr = zcl_kr_postcode=>gui_start2( iv_full_screen = abap_true ).
+    ls_addr = zcl_kr_postcode=>gui_start2( ).
     " 데모: ZKR_POSTCODE_DEMO_GUI
     SUBMIT zkr_postcode_demo_gui.
 

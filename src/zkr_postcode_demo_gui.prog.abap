@@ -19,8 +19,7 @@ INITIALIZATION.
 **********************************************************************
   DATA: ls_addr TYPE zcl_kr_postcode=>ts_addr.
 
-*  ls_addr = zcl_kr_postcode=>gui_start2( iv_full_screen = abap_true ).
-  ls_addr = zcl_kr_postcode=>gui_start2( iv_full_screen = abap_false ).
+  ls_addr = zcl_kr_postcode=>gui_start2( ).
 
   IF ls_addr IS NOT INITIAL.
     p_adr_kr = ls_addr-roadaddress.

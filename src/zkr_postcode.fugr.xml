@@ -60,14 +60,6 @@
     <item>
      <FUNCNAME>ZKR_POSTCODE_OPEN</FUNCNAME>
      <SHORT_TEXT>open</SHORT_TEXT>
-     <IMPORT>
-      <RSIMP>
-       <PARAMETER>IV_FULL_SCREEN</PARAMETER>
-       <OPTIONAL>X</OPTIONAL>
-       <REFERENCE>X</REFERENCE>
-       <TYP>FLAG</TYP>
-      </RSIMP>
-     </IMPORT>
      <EXPORT>
       <RSEXP>
        <PARAMETER>ES_ADDR</PARAMETER>
@@ -76,10 +68,6 @@
       </RSEXP>
      </EXPORT>
      <DOCUMENTATION>
-      <RSFDO>
-       <PARAMETER>IV_FULL_SCREEN</PARAMETER>
-       <KIND>P</KIND>
-      </RSFDO>
       <RSFDO>
        <PARAMETER>ES_ADDR</PARAMETER>
        <KIND>P</KIND>

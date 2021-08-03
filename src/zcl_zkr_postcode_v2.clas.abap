@@ -23,6 +23,9 @@ public section.
     importing
       !IV_CALLBACK_ACTION type STRING
       !IO_VIEW type ref to IF_WD_VIEW_CONTROLLER .
+  class-methods SH_POPUP
+    importing
+      !IO_SEARCH_HELP type ref to CL_WDR_ELEMENTARY_SEARCH_HELP optional .
   PROTECTED SECTION.
 
     METHODS do_callback .
@@ -41,17 +44,18 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
 
 
   METHOD do_callback.
-    DATA: lv_event_id TYPE fpm_event_id,
-          lo_fpm      TYPE REF TO if_fpm,
-          lo_event    TYPE REF TO cl_fpm_event,
-          lt_key      TYPE TABLE OF string,
-          lv_key      TYPE string,
-          lr_value    TYPE REF TO data,
-          lv_action   TYPE string,
-          lo_view     TYPE REF TO cl_wdr_view,
-          lo_action   TYPE REF TO if_wdr_action,
-          lt_param    TYPE wdr_name_value_list,
-          ls_param    TYPE wdr_name_value.
+    DATA: lv_event_id    TYPE fpm_event_id,
+          lo_fpm         TYPE REF TO if_fpm,
+          lo_event       TYPE REF TO cl_fpm_event,
+          lt_key         TYPE TABLE OF string,
+          lv_key         TYPE string,
+          lr_value       TYPE REF TO data,
+          lv_action      TYPE string,
+          lo_view        TYPE REF TO cl_wdr_view,
+          lo_action      TYPE REF TO if_wdr_action,
+          lt_param       TYPE wdr_name_value_list,
+          ls_param       TYPE wdr_name_value,
+          lo_search_help TYPE REF TO cl_wdr_elementary_search_help.
 
 
 **********************************************************************
@@ -127,6 +131,31 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
       lo_action->fire( ).
 
     ENDIF.
+
+
+**********************************************************************
+* search help
+**********************************************************************
+    mo_event_data->get_value(
+      EXPORTING
+        iv_key   = 'IO_SEARCH_HELP'
+      IMPORTING
+        ev_value = lo_search_help
+    ).
+    IF lo_search_help IS NOT INITIAL.
+
+      ASSIGN ('(SAPLZKR_POSTCODE)GS_ADDR') TO FIELD-SYMBOL(<ls_addr>).
+      mo_event_data->get_value(
+        EXPORTING
+          iv_key   = 'IS_ADDR'
+        IMPORTING
+          ev_value = <ls_addr>
+      ).
+
+      lo_search_help->do_return( 'GENERAL' ).
+
+    ENDIF.
+
   ENDMETHOD.
 
 
@@ -213,6 +242,21 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
       EXPORTING
         iv_key   = 'IO_VIEW'
         iv_value = CAST cl_wdr_view( io_view )
+    ).
+
+    open_popup( lo_event_data ).
+  ENDMETHOD.
+
+
+  METHOD sh_popup.
+    DATA: lo_event_data TYPE REF TO if_fpm_parameter.
+
+    CREATE OBJECT lo_event_data TYPE cl_fpm_parameter.
+
+    lo_event_data->set_value(
+      EXPORTING
+        iv_key   = 'IO_SEARCH_HELP'
+        iv_value = io_search_help
     ).
 
     open_popup( lo_event_data ).
