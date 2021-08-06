@@ -13,6 +13,7 @@ CLASS zcl_kr_postcode_demo_fpm_form DEFINITION
         zonecode     TYPE string,
         roadaddress  TYPE string,
         jibunaddress TYPE string,
+        ad_pstcd1    TYPE ad_pstcd1,
       END OF ts_address .
   PROTECTED SECTION.
   PRIVATE SECTION.
@@ -37,10 +38,16 @@ CLASS ZCL_KR_POSTCODE_DEMO_FPM_FORM IMPLEMENTATION.
 
     CASE io_event->mv_event_id.
       WHEN 'ADDR'.
+        CHECK: iv_raised_by_own_ui EQ abap_true.
         " input address
-        zcl_kr_postcode=>fpm_start2( ).
+        zcl_kr_postcode=>fpm_start2(
+          EXPORTING
+            iv_callback_event_id = 'ADDR_RETURN'
+            io_event             = io_event
+        ).
 
-      WHEN 'ZKR_POSTCODE'.
+      WHEN 'ADDR_RETURN'.
+        CHECK: iv_raised_by_own_ui EQ abap_true.
         " return address
         ev_data_changed = abap_true.
         io_event->mo_event_data->get_value(
@@ -72,6 +79,12 @@ CLASS ZCL_KR_POSTCODE_DEMO_FPM_FORM IMPLEMENTATION.
       ls_field_description-name = ls_comp-name.
       ls_field_description-label_text = ls_comp-name.
       ls_field_description-read_only = abap_true.
+
+      CASE ls_field_description-name.
+        WHEN 'AD_PSTCD1'.
+          ls_field_description-read_only = abap_false.
+          ls_field_description-ddic_shlp_name = 'ZH_KR_POSTCODE'.
+      ENDCASE.
 
       APPEND ls_field_description TO et_field_description.
     ENDLOOP.

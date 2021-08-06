@@ -8,8 +8,7 @@
 *----------------------------------------------------------------------*
 MODULE pbo_1000 OUTPUT.
   SET TITLEBAR '1000'.
-
-    SET PF-STATUS 'TESTHTM1' OF PROGRAM 'SAPHTML_EVENTS_DEMO'.
+  SET PF-STATUS 'TESTHTM1' OF PROGRAM 'SAPHTML_EVENTS_DEMO'.
 
   IF go_gui_html_viewer IS INITIAL.
     PERFORM do_init.

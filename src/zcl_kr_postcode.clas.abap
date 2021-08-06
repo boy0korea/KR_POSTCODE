@@ -65,7 +65,8 @@ public section.
       !IO_VIEW type ref to IF_WD_VIEW_CONTROLLER .
   class-methods FPM_START2
     importing
-      !IV_CALLBACK_EVENT_ID type FPM_EVENT_ID default 'ZKR_POSTCODE' .
+      !IV_CALLBACK_EVENT_ID type FPM_EVENT_ID default 'ZKR_POSTCODE'
+      !IO_EVENT type ref to CL_FPM_EVENT .
   class-methods CONVERT_JSON_TO_ADDR
     importing
       !IV_JSON type CLIKE
@@ -180,8 +181,12 @@ CLASS ZCL_KR_POSTCODE IMPLEMENTATION.
   ENDMETHOD.                    "convert_json_to_addr
 
 
-  METHOD FPM_START2.
-    zcl_zkr_postcode_v2=>fpm_popup( iv_callback_event_id ).
+  METHOD fpm_start2.
+    zcl_zkr_postcode_v2=>fpm_popup(
+      EXPORTING
+        iv_callback_event_id = iv_callback_event_id
+        io_event             = io_event
+    ).
   ENDMETHOD.
 
 
@@ -231,12 +236,13 @@ CLASS ZCL_KR_POSTCODE IMPLEMENTATION.
 * 메소드 설명
 **********************************************************************
     " for FPM
+    DATA: io_event TYPE REF TO cl_fpm_event.
     " 시작:
     zcl_kr_postcode=>fpm_start2(
         iv_callback_event_id = 'ZKR_POSTCODE'
+        io_event             = io_event
     ).
     " 종료: iv_callback_event_id 에서 입력한 이벤트 일때 구현하세요.
-    DATA: io_event TYPE REF TO cl_fpm_event.
     io_event->mo_event_data->get_value(
       EXPORTING
         iv_key   = 'IS_ADDR'

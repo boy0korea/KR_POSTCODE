@@ -6,6 +6,7 @@ class ZCL_ZKR_POSTCODE_V2 definition
 public section.
 
   data MO_EVENT_DATA type ref to IF_FPM_PARAMETER .
+  data MO_COMP_USAGE type ref to IF_WD_COMPONENT_USAGE .
   class-data GV_WD_COMP_ID type STRING read-only .
   class-data GO_WD_COMP type ref to ZIWCI_KR_POSTCODE_V2 read-only .
 
@@ -16,16 +17,17 @@ public section.
   methods ON_OK
     importing
       !IS_ADDR type ZCL_KR_POSTCODE=>TS_ADDR .
+  methods ON_CLOSE
+    for event WINDOW_CLOSED of IF_WD_WINDOW .
   class-methods FPM_POPUP
     importing
-      !IV_CALLBACK_EVENT_ID type FPM_EVENT_ID default 'ZKR_POSTCODE' .
+      !IV_CALLBACK_EVENT_ID type FPM_EVENT_ID default 'ZKR_POSTCODE'
+      !IO_EVENT type ref to CL_FPM_EVENT .
   class-methods WD_POPUP
     importing
       !IV_CALLBACK_ACTION type STRING
       !IO_VIEW type ref to IF_WD_VIEW_CONTROLLER .
-  class-methods SH_POPUP
-    importing
-      !IO_SEARCH_HELP type ref to CL_WDR_ELEMENTARY_SEARCH_HELP optional .
+  class-methods SH_POPUP .
   PROTECTED SECTION.
 
     METHODS do_callback .
@@ -47,6 +49,7 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
     DATA: lv_event_id    TYPE fpm_event_id,
           lo_fpm         TYPE REF TO if_fpm,
           lo_event       TYPE REF TO cl_fpm_event,
+          lo_event_start TYPE REF TO cl_fpm_event,
           lt_key         TYPE TABLE OF string,
           lv_key         TYPE string,
           lr_value       TYPE REF TO data,
@@ -72,11 +75,20 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
       lo_fpm = cl_fpm=>get_instance( ).
       CHECK: lo_fpm IS NOT INITIAL.
 
-      lo_fpm->raise_event_by_id(
+      CREATE OBJECT lo_event
         EXPORTING
-          iv_event_id   = lv_event_id   " This defines the ID of the FPM Event
-          io_event_data = mo_event_data " Property Bag
+          iv_event_id   = lv_event_id
+          io_event_data = mo_event_data.
+
+      mo_event_data->get_value(
+        EXPORTING
+          iv_key   = 'IO_EVENT'
+        IMPORTING
+          ev_value = lo_event_start
       ).
+      lo_event->ms_source_uibb = lo_event_start->ms_source_uibb.
+
+      lo_fpm->raise_event( lo_event ).
 
     ENDIF.
 
@@ -170,6 +182,12 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
         iv_value = iv_callback_event_id
     ).
 
+    lo_event_data->set_value(
+      EXPORTING
+        iv_key   = 'IO_EVENT'
+        iv_value = io_event
+    ).
+
     open_popup( lo_event_data ).
   ENDMETHOD.
 
@@ -207,22 +225,22 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
   METHOD open_popup.
     DATA: lo_comp_usage TYPE REF TO if_wd_component_usage.
 
-    IF go_wd_comp IS INITIAL.
-      cl_wdr_runtime_services=>get_component_usage(
-        EXPORTING
-          component            = wdr_task=>application->component
-          used_component_name  = gv_wd_comp_id
-          component_usage_name = gv_wd_comp_id
-          create_component     = abap_true
-          do_create            = abap_true
-        RECEIVING
-          component_usage      = lo_comp_usage
-      ).
-      go_wd_comp ?= lo_comp_usage->get_interface_controller( ).
-    ENDIF.
+    cl_wdr_runtime_services=>get_component_usage(
+      EXPORTING
+        component            = wdr_task=>application->component
+        used_component_name  = gv_wd_comp_id
+        component_usage_name = gv_wd_comp_id
+        create_component     = abap_true
+        do_create            = abap_true
+      RECEIVING
+        component_usage      = lo_comp_usage
+    ).
+
+    go_wd_comp ?= lo_comp_usage->get_interface_controller( ).
 
     go_wd_comp->open_popup(
         io_event_data = io_event_data
+        io_comp_usage = lo_comp_usage
     ).
   ENDMETHOD.
 
@@ -249,16 +267,26 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
 
 
   METHOD sh_popup.
-    DATA: lo_event_data TYPE REF TO if_fpm_parameter.
+    DATA: lo_event_data  TYPE REF TO if_fpm_parameter,
+          lo_component_d TYPE REF TO object.
+    FIELD-SYMBOLS: <lo_search_help> TYPE REF TO cl_wdr_elementary_search_help.
+
+    lo_component_d = wdr_task=>application->get_component_for_name( 'WDR_F4_ELEMENTARY' )->component->get_delegate( ).
+    ASSIGN lo_component_d->('IG_COMPONENTCONTROLLER~SEARCH_HELP') TO <lo_search_help>.
 
     CREATE OBJECT lo_event_data TYPE cl_fpm_parameter.
 
     lo_event_data->set_value(
       EXPORTING
         iv_key   = 'IO_SEARCH_HELP'
-        iv_value = io_search_help
+        iv_value = <lo_search_help>
     ).
 
     open_popup( lo_event_data ).
+  ENDMETHOD.
+
+
+  METHOD on_close.
+    mo_comp_usage->delete_component( ).
   ENDMETHOD.
 ENDCLASS.

@@ -26,7 +26,7 @@
        <Node Name="BUTTON_SUB_ITEM" SimpleFormat="true">
         <Item Index="000001" SimpleFormat="true">
          <ACTION_ID Final="5 ">FGL2_605D079009D70550E100800037C80A6B</ACTION_ID>
-         <INDEX/>
+         <INDEX>1</INDEX>
          <HOTKEY/>
          <IMAGE/>
          <TEXT Transl="true">1</TEXT>
@@ -92,6 +92,19 @@
        <FORM_ELEMENT_TYPE>SE</FORM_ELEMENT_TYPE>
        <FORM_ELEMENT_ID>FGL2_605D07CF09D70550E100800037C80A6B</FORM_ELEMENT_ID>
       </Item>
+      <Item Index="000005" SimpleFormat="true">
+       <ID Final="5 ">_GENP_42010A02B0231EDBBDB0F4637C6A7D40</ID>
+       <START_ROW>6</START_ROW>
+       <START_COLUMN>D</START_COLUMN>
+       <END_ROW>6</END_ROW>
+       <END_COLUMN>E</END_COLUMN>
+       <LABEL_START_ROW>6</LABEL_START_ROW>
+       <LABEL_START_COLUMN>A</LABEL_START_COLUMN>
+       <LABEL_END_ROW>6</LABEL_END_ROW>
+       <LABEL_END_COLUMN>C</LABEL_END_COLUMN>
+       <FORM_ELEMENT_TYPE>SE</FORM_ELEMENT_TYPE>
+       <FORM_ELEMENT_ID>FGL2_42010A02B0231EDBBDB0F4637C6A5D40</FORM_ELEMENT_ID>
+      </Item>
      </Node>
      <Node Name="STANDARD_ELEMENT" SimpleFormat="true">
       <Item Index="000001" SimpleFormat="true">
@@ -136,7 +149,27 @@
        <TAG_ACTIVE/>
        <CTXT_MENU_ID/>
       </Item>
+      <Item Index="000004" SimpleFormat="true">
+       <ID Final="5 ">FGL2_42010A02B0231EDBBDB0F4637C6A5D40</ID>
+       <NAME>AD_PSTCD1</NAME>
+       <TYPE>IN</TYPE>
+       <EXPLANATION Transl="true"/>
+       <TEXT Transl="true"/>
+       <TOOLTIP Transl="true"/>
+       <INPUT_PROMPT Transl="true"/>
+       <INSTANCE_STYLE/>
+       <SPECIAL_PROPERTIES/>
+       <SPECIAL_ACTIONS/>
+       <LABEL_TEXT Transl="true"/>
+       <LABEL_VISIBILITY>02</LABEL_VISIBILITY>
+       <LABEL_INSTANCE_STYLE/>
+       <TAG_ACTIVE/>
+       <TAG/>
+       <CTXT_MENU_ID/>
+      </Item>
      </Node>
+     <Node Name="PERSONALIZATION" SimpleFormat="true"/>
+     <Node Name="QUICKVIEW" SimpleFormat="true"/>
     </Item>
    </Node>
   </Item>

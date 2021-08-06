@@ -37,8 +37,25 @@
            <LOCATION>1</LOCATION>
            <TYPE>T</TYPE>
            <CONFIG_ID>ZKR_POSTCODE_DEMO_FPM_FORM</CONFIG_ID>
+           <DEFAULT_IN_STACK>X</DEFAULT_IN_STACK>
            <Node Name="UIBB_TOOLBAR" SimpleFormat="true">
             <Item Index="000001" SimpleFormat="true">
+             <Node Name="UIBB_BUTTON" SimpleFormat="true"/>
+            </Item>
+           </Node>
+          </Item>
+          <Item Index="000002" SimpleFormat="true">
+           <FPM_PRIMARY_ATTRIBUTE Final="5 ">_GENP_42010A02B0231EDBBDB19A8F5BAFDD40</FPM_PRIMARY_ATTRIBUTE>
+           <INTERFACE_VIEW>FORM_WINDOW</INTERFACE_VIEW>
+           <COMPONENT>FPM_FORM_UIBB_GL2</COMPONENT>
+           <INDEX>2</INDEX>
+           <LOCATION>1</LOCATION>
+           <TYPE>T</TYPE>
+           <CONFIG_ID>ZKR_POSTCODE_DEMO_FPM_FORM</CONFIG_ID>
+           <INSTANCE_ID>2</INSTANCE_ID>
+           <Node Name="UIBB_TOOLBAR" SimpleFormat="true">
+            <Item Index="000001" SimpleFormat="true">
+             <CAPTURE_ACTIONS>N</CAPTURE_ACTIONS>
              <Node Name="UIBB_BUTTON" SimpleFormat="true"/>
             </Item>
            </Node>
@@ -51,6 +68,7 @@
          <Node Name="BUTTON" SimpleFormat="true"/>
         </Item>
        </Node>
+       <Node Name="UIBB_SELECTOR" SimpleFormat="true"/>
       </Item>
      </Node>
      <Node Name="MSG_MAPPER_SETTING" SimpleFormat="true"/>
@@ -61,6 +79,7 @@
        <Node Name="WIRE" SimpleFormat="true"/>
       </Item>
      </Node>
+     <Node Name="AMC_BINDING" SimpleFormat="true"/>
     </Item>
    </Node>
   </Item>

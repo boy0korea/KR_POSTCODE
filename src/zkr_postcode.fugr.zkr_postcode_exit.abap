@@ -51,12 +51,9 @@ FUNCTION zkr_postcode_exit.
     " WD
     CASE callcontrol-step.
       WHEN 'SELECT'.
-        DATA(lo_d) = wdr_task=>application->get_component_for_name( 'WDR_F4_ELEMENTARY' )->component->get_delegate( ).
-        ASSIGN lo_d->('IG_COMPONENTCONTROLLER~SEARCH_HELP') TO FIELD-SYMBOL(<lo_sh>).
-        zcl_zkr_postcode_v2=>sh_popup(
-            io_search_help = <lo_sh>
-        ).
+        zcl_zkr_postcode_v2=>sh_popup( ).
         callcontrol-step = 'EXIT'.
+        SET HANDLER lcl_on_close_wdr_f4_elementary=>on_close. " remove cancel message
         RETURN.
       WHEN 'RETURN'.
         MOVE-CORRESPONDING gs_addr TO ls_select_list.
