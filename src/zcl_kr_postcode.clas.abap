@@ -66,7 +66,7 @@ public section.
   class-methods FPM_START2
     importing
       !IV_CALLBACK_EVENT_ID type FPM_EVENT_ID default 'ZKR_POSTCODE'
-      !IO_EVENT type ref to CL_FPM_EVENT .
+      !IO_EVENT type ref to CL_FPM_EVENT optional .
   class-methods CONVERT_JSON_TO_ADDR
     importing
       !IV_JSON type CLIKE

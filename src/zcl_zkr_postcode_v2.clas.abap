@@ -1,33 +1,33 @@
-class ZCL_ZKR_POSTCODE_V2 definition
-  public
-  inheriting from CL_WD_COMPONENT_ASSISTANCE
-  create public .
+CLASS zcl_zkr_postcode_v2 DEFINITION
+  PUBLIC
+  INHERITING FROM cl_wd_component_assistance
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  data MO_EVENT_DATA type ref to IF_FPM_PARAMETER .
-  data MO_COMP_USAGE type ref to IF_WD_COMPONENT_USAGE .
-  class-data GV_WD_COMP_ID type STRING read-only .
-  class-data GO_WD_COMP type ref to ZIWCI_KR_POSTCODE_V2 read-only .
+    DATA mo_event_data TYPE REF TO if_fpm_parameter .
+    DATA mo_comp_usage TYPE REF TO if_wd_component_usage .
+    CLASS-DATA gv_wd_comp_id TYPE string READ-ONLY .
+    CLASS-DATA go_wd_comp TYPE REF TO ziwci_kr_postcode_v2 READ-ONLY .
 
-  class-methods CLASS_CONSTRUCTOR .
-  class-methods OPEN_POPUP
-    importing
-      !IO_EVENT_DATA type ref to IF_FPM_PARAMETER .
-  methods ON_OK
-    importing
-      !IS_ADDR type ZCL_KR_POSTCODE=>TS_ADDR .
-  methods ON_CLOSE
-    for event WINDOW_CLOSED of IF_WD_WINDOW .
-  class-methods FPM_POPUP
-    importing
-      !IV_CALLBACK_EVENT_ID type FPM_EVENT_ID default 'ZKR_POSTCODE'
-      !IO_EVENT type ref to CL_FPM_EVENT .
-  class-methods WD_POPUP
-    importing
-      !IV_CALLBACK_ACTION type STRING
-      !IO_VIEW type ref to IF_WD_VIEW_CONTROLLER .
-  class-methods SH_POPUP .
+    CLASS-METHODS class_constructor .
+    CLASS-METHODS open_popup
+      IMPORTING
+        !io_event_data TYPE REF TO if_fpm_parameter .
+    METHODS on_ok
+      IMPORTING
+        !is_addr TYPE zcl_kr_postcode=>ts_addr .
+    METHODS on_close
+        FOR EVENT window_closed OF if_wd_window .
+    CLASS-METHODS fpm_popup
+      IMPORTING
+        !iv_callback_event_id TYPE fpm_event_id DEFAULT 'ZKR_POSTCODE'
+        !io_event             TYPE REF TO cl_fpm_event OPTIONAL .
+    CLASS-METHODS wd_popup
+      IMPORTING
+        !iv_callback_action TYPE string
+        !io_view            TYPE REF TO if_wd_view_controller .
+    CLASS-METHODS sh_popup .
   PROTECTED SECTION.
 
     METHODS do_callback .
@@ -86,7 +86,9 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
         IMPORTING
           ev_value = lo_event_start
       ).
-      lo_event->ms_source_uibb = lo_event_start->ms_source_uibb.
+      IF lo_event_start IS NOT INITIAL.
+        lo_event->ms_source_uibb = lo_event_start->ms_source_uibb.
+      ENDIF.
 
       lo_fpm->raise_event( lo_event ).
 
@@ -182,11 +184,13 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
         iv_value = iv_callback_event_id
     ).
 
-    lo_event_data->set_value(
-      EXPORTING
-        iv_key   = 'IO_EVENT'
-        iv_value = io_event
-    ).
+    IF io_event IS NOT INITIAL.
+      lo_event_data->set_value(
+        EXPORTING
+          iv_key   = 'IO_EVENT'
+          iv_value = io_event
+      ).
+    ENDIF.
 
     open_popup( lo_event_data ).
   ENDMETHOD.
