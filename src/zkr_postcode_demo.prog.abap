@@ -1,11 +1,4 @@
-*&---------------------------------------------------------------------*
-*& Report  ZKR_POSTCODE_DEMO
-*&
-*&---------------------------------------------------------------------*
-*&
-*&
-*&---------------------------------------------------------------------*
-
+* https://github.com/boy0korea/KR_POSTCODE
 REPORT  zkr_postcode_demo.
 
 PARAMETERS: p_pstcd1 TYPE ad_pstcd1 MATCHCODE OBJECT zh_kr_postcode,

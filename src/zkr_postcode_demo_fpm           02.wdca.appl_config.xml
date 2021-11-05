@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Application Name="ZKR_POSTCODE_DEMO_FPM" ConfId="ZKR_POSTCODE_DEMO_FPM" ConfType="02" ConfVar="">
+ <Component Name="FPM_OVP_COMPONENT" Usage="ZKR_POSTCODE_DEMO_FPM" ConfType="00" ConfId="ZKR_POSTCODE_DEMO_FPM" ConfVar="" Interface="False"/>
+</Application>
