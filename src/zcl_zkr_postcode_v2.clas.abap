@@ -5,32 +5,35 @@ CLASS zcl_zkr_postcode_v2 DEFINITION
 
   PUBLIC SECTION.
 
-    DATA mo_event_data TYPE REF TO if_fpm_parameter .
-    DATA mo_comp_usage TYPE REF TO if_wd_component_usage .
-    CLASS-DATA gv_wd_comp_id TYPE string READ-ONLY .
     CLASS-DATA go_wd_comp TYPE REF TO ziwci_kr_postcode_v2 READ-ONLY .
+    CLASS-DATA gv_wd_comp_id TYPE string READ-ONLY .
+    DATA mo_comp_usage TYPE REF TO if_wd_component_usage .
+    DATA mo_event_data TYPE REF TO if_fpm_parameter .
 
     CLASS-METHODS class_constructor .
-    CLASS-METHODS open_popup
+    CLASS-METHODS fpm_popup
       IMPORTING
-        !io_event_data TYPE REF TO if_fpm_parameter .
+        !io_event_orig        TYPE REF TO cl_fpm_event OPTIONAL
+        !iv_callback_event_id TYPE string DEFAULT 'ZKR_POSTCODE'
+        !io_event_data        TYPE REF TO if_fpm_parameter OPTIONAL .
+    METHODS on_close
+        FOR EVENT window_closed OF if_wd_window .
     METHODS on_ok
       IMPORTING
         !is_addr TYPE zcl_kr_postcode=>ts_addr .
-    METHODS on_close
-        FOR EVENT window_closed OF if_wd_window .
-    CLASS-METHODS fpm_popup
+    CLASS-METHODS open_popup
       IMPORTING
-        !iv_callback_event_id TYPE fpm_event_id DEFAULT 'ZKR_POSTCODE'
-        !io_event             TYPE REF TO cl_fpm_event OPTIONAL .
+        !io_event_data TYPE REF TO if_fpm_parameter .
     CLASS-METHODS wd_popup
       IMPORTING
+        !io_view            TYPE REF TO if_wd_view_controller
         !iv_callback_action TYPE string
-        !io_view            TYPE REF TO if_wd_view_controller .
+        !io_event_data      TYPE REF TO if_fpm_parameter OPTIONAL .
     CLASS-METHODS sh_popup .
   PROTECTED SECTION.
 
     METHODS do_callback .
+    CLASS-METHODS readme .
   PRIVATE SECTION.
 ENDCLASS.
 
@@ -49,7 +52,7 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
     DATA: lv_event_id    TYPE fpm_event_id,
           lo_fpm         TYPE REF TO if_fpm,
           lo_event       TYPE REF TO cl_fpm_event,
-          lo_event_start TYPE REF TO cl_fpm_event,
+          lo_event_orig  TYPE REF TO cl_fpm_event,
           lt_key         TYPE TABLE OF string,
           lv_key         TYPE string,
           lr_value       TYPE REF TO data,
@@ -82,17 +85,18 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
 
       mo_event_data->get_value(
         EXPORTING
-          iv_key   = 'IO_EVENT'
+          iv_key   = 'IO_EVENT_ORIG'
         IMPORTING
-          ev_value = lo_event_start
+          ev_value = lo_event_orig
       ).
-      IF lo_event_start IS NOT INITIAL.
-        lo_event->ms_source_uibb = lo_event_start->ms_source_uibb.
+      IF lo_event_orig IS NOT INITIAL.
+        lo_event->ms_source_uibb = lo_event_orig->ms_source_uibb.
       ENDIF.
 
       lo_fpm->raise_event( lo_event ).
 
     ENDIF.
+
 
 **********************************************************************
 * WD
@@ -146,7 +150,6 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
 
     ENDIF.
 
-
 **********************************************************************
 * search help
 **********************************************************************
@@ -176,7 +179,11 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
   METHOD fpm_popup.
     DATA: lo_event_data TYPE REF TO if_fpm_parameter.
 
-    CREATE OBJECT lo_event_data TYPE cl_fpm_parameter.
+    IF io_event_data IS NOT INITIAL.
+      lo_event_data = io_event_data.
+    ELSE.
+      CREATE OBJECT lo_event_data TYPE cl_fpm_parameter.
+    ENDIF.
 
     lo_event_data->set_value(
       EXPORTING
@@ -184,13 +191,14 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
         iv_value = iv_callback_event_id
     ).
 
-    IF io_event IS NOT INITIAL.
+    IF io_event_orig IS NOT INITIAL.
       lo_event_data->set_value(
         EXPORTING
-          iv_key   = 'IO_EVENT'
-          iv_value = io_event
+          iv_key   = 'IO_EVENT_ORIG'
+          iv_value = io_event_orig
       ).
     ENDIF.
+
 
     open_popup( lo_event_data ).
   ENDMETHOD.
@@ -227,6 +235,7 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
 
 
   METHOD open_popup.
+* Please call fpm_popup( ) or wd_popup( ).
     DATA: lo_comp_usage TYPE REF TO if_wd_component_usage.
 
     cl_wdr_runtime_services=>get_component_usage(
@@ -252,7 +261,11 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
   METHOD wd_popup.
     DATA: lo_event_data TYPE REF TO if_fpm_parameter.
 
-    CREATE OBJECT lo_event_data TYPE cl_fpm_parameter.
+    IF io_event_data IS NOT INITIAL.
+      lo_event_data = io_event_data.
+    ELSE.
+      CREATE OBJECT lo_event_data TYPE cl_fpm_parameter.
+    ENDIF.
 
     lo_event_data->set_value(
       EXPORTING
@@ -292,5 +305,10 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
 
   METHOD on_close.
     mo_comp_usage->delete_component( ).
+  ENDMETHOD.
+
+
+  METHOD readme.
+* https://github.com/boy0korea/ZWD_INSTANT_POPUP
   ENDMETHOD.
 ENDCLASS.
