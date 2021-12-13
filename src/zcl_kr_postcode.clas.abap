@@ -61,11 +61,11 @@ public section.
       value(RS_ADDR) type ZCL_KR_POSTCODE=>TS_ADDR .
   class-methods WD_START2
     importing
-      !IV_CALLBACK_ACTION type STRING
+      !IV_CALLBACK_ACTION type CLIKE
       !IO_VIEW type ref to IF_WD_VIEW_CONTROLLER .
   class-methods FPM_START2
     importing
-      !IV_CALLBACK_EVENT_ID type FPM_EVENT_ID default 'ZKR_POSTCODE'
+      !IV_CALLBACK_EVENT_ID type CLIKE default 'ZKR_POSTCODE'
       !IO_EVENT type ref to CL_FPM_EVENT optional .
   class-methods CONVERT_JSON_TO_ADDR
     importing
@@ -185,7 +185,7 @@ CLASS ZCL_KR_POSTCODE IMPLEMENTATION.
     zcl_zkr_postcode_v2=>fpm_popup(
       EXPORTING
         iv_callback_event_id = iv_callback_event_id
-        io_event             = io_event
+        io_event_orig        = io_event
     ).
   ENDMETHOD.
 

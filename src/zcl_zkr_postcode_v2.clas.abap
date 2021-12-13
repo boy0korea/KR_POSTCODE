@@ -14,7 +14,7 @@ CLASS zcl_zkr_postcode_v2 DEFINITION
     CLASS-METHODS fpm_popup
       IMPORTING
         !io_event_orig        TYPE REF TO cl_fpm_event OPTIONAL
-        !iv_callback_event_id TYPE string DEFAULT 'ZKR_POSTCODE'
+        !iv_callback_event_id TYPE clike DEFAULT 'ZKR_POSTCODE'
         !io_event_data        TYPE REF TO if_fpm_parameter OPTIONAL .
     METHODS on_close
         FOR EVENT window_closed OF if_wd_window .
@@ -27,7 +27,7 @@ CLASS zcl_zkr_postcode_v2 DEFINITION
     CLASS-METHODS wd_popup
       IMPORTING
         !io_view            TYPE REF TO if_wd_view_controller
-        !iv_callback_action TYPE string
+        !iv_callback_action TYPE clike
         !io_event_data      TYPE REF TO if_fpm_parameter OPTIONAL .
     CLASS-METHODS sh_popup .
   PROTECTED SECTION.
