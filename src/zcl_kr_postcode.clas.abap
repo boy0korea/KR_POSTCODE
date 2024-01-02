@@ -97,18 +97,18 @@ CLASS ZCL_KR_POSTCODE IMPLEMENTATION.
     FIELD-SYMBOLS: <lv_data> TYPE data.
 
     CHECK: iv_json IS NOT INITIAL.
+    lv_string = iv_json.
 
 **********************************************************************
     " /ui2/cl_json 이 있는 경우 사용 가능.
     /ui2/cl_json=>deserialize(
       EXPORTING
-        json = iv_json
+        json = lv_string
       CHANGING
         data = rs_addr
     ).
 **********************************************************************
 **    " /ui2/cl_json 이 없는 경우 대체 코드.
-*    lv_string = iv_json.
 *    REPLACE '{"' IN lv_string WITH ''.
 *    REPLACE '"}' IN lv_string WITH ''.
 *    SPLIT lv_string AT '","' INTO TABLE lt_string.

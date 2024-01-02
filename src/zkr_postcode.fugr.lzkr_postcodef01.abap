@@ -98,6 +98,11 @@ FORM on_sapevent  USING    iv_action
     WHEN 'RETURN'.
       CONCATENATE LINES OF it_postdata INTO lv_json.
       REPLACE 'return=' IN lv_json WITH ''.
+      " 특수문자 3개 처리 &=?
+      " CL_GUI_HTML_VIEWER->TRANSLATE_QUERY_STRING
+      REPLACE ALL OCCURRENCES OF '%26' IN lv_json WITH '&'.
+      REPLACE ALL OCCURRENCES OF '%3D' IN lv_json WITH '='.
+      REPLACE ALL OCCURRENCES OF '%3F' IN lv_json WITH '?'.
       gs_addr = zcl_kr_postcode=>convert_json_to_addr( lv_json ).
       PERFORM do_free_and_back.
 
