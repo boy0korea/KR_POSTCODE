@@ -43,7 +43,10 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
 
 
   METHOD class_constructor.
-    gv_wd_comp_id = CAST cl_abap_refdescr( cl_abap_typedescr=>describe_by_data( go_wd_comp ) )->get_referenced_type( )->get_relative_name( ).
+*    gv_wd_comp_id = CAST cl_abap_refdescr( cl_abap_typedescr=>describe_by_data( go_wd_comp ) )->get_referenced_type( )->get_relative_name( ).
+    DATA: lo_ref TYPE REF TO cl_abap_refdescr.
+    lo_ref ?= cl_abap_typedescr=>describe_by_data( go_wd_comp ).
+    gv_wd_comp_id = lo_ref->get_referenced_type( )->get_relative_name( ).
     REPLACE 'IWCI_' IN gv_wd_comp_id WITH ''.
   ENDMETHOD.
 
@@ -57,12 +60,13 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
           lv_key         TYPE string,
           lr_value       TYPE REF TO data,
           lv_action      TYPE string,
+          lx_wdr_runtime TYPE REF TO cx_wdr_runtime,
           lo_view        TYPE REF TO cl_wdr_view,
           lo_action      TYPE REF TO if_wdr_action,
           lt_param       TYPE wdr_name_value_list,
           ls_param       TYPE wdr_name_value,
           lo_search_help TYPE REF TO cl_wdr_elementary_search_help.
-
+    FIELD-SYMBOLS: <ls_addr> TYPE data.
 
 **********************************************************************
 * FPM
@@ -119,7 +123,7 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
 
       TRY.
           lo_action = lo_view->get_action_internal( lv_action ).
-        CATCH cx_wdr_runtime INTO DATA(lx_wdr_runtime).
+        CATCH cx_wdr_runtime INTO lx_wdr_runtime.
           wdr_task=>application->component->if_wd_controller~get_message_manager( )->report_error_message( lx_wdr_runtime->get_text( ) ).
       ENDTRY.
       CHECK: lo_action IS NOT INITIAL.
@@ -161,7 +165,7 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
     ).
     IF lo_search_help IS NOT INITIAL.
 
-      ASSIGN ('(SAPLZKR_POSTCODE)GS_ADDR') TO FIELD-SYMBOL(<ls_addr>).
+      ASSIGN ('(SAPLZKR_POSTCODE)GS_ADDR') TO <ls_addr>.
       mo_event_data->get_value(
         EXPORTING
           iv_key   = 'IS_ADDR'
@@ -204,12 +208,18 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD on_close.
+    mo_comp_usage->delete_component( ).
+  ENDMETHOD.
+
+
   METHOD on_ok.
     DATA: lt_callstack   TYPE abap_callstack,
           ls_callstack   TYPE abap_callstack_line,
           lo_class_desc  TYPE REF TO cl_abap_classdescr,
           ls_method_desc TYPE abap_methdescr,
-          ls_param_desc  TYPE abap_parmdescr.
+          ls_param_desc  TYPE abap_parmdescr,
+          lv_string      TYPE string.
     FIELD-SYMBOLS: <lv_value> TYPE any.
 
     CALL FUNCTION 'SYSTEM_CALLSTACK'
@@ -222,9 +232,10 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
     READ TABLE lo_class_desc->methods INTO ls_method_desc WITH KEY name = ls_callstack-blockname.
     LOOP AT ls_method_desc-parameters INTO ls_param_desc WHERE parm_kind = cl_abap_classdescr=>importing.
       ASSIGN (ls_param_desc-name) TO <lv_value>.
+      lv_string = ls_param_desc-name.
       mo_event_data->set_value(
         EXPORTING
-          iv_key   = CONV #( ls_param_desc-name )
+          iv_key   = lv_string
           iv_value = <lv_value>
       ).
     ENDLOOP.
@@ -258,28 +269,8 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD wd_popup.
-    DATA: lo_event_data TYPE REF TO if_fpm_parameter.
-
-    IF io_event_data IS NOT INITIAL.
-      lo_event_data = io_event_data.
-    ELSE.
-      CREATE OBJECT lo_event_data TYPE cl_fpm_parameter.
-    ENDIF.
-
-    lo_event_data->set_value(
-      EXPORTING
-        iv_key   = 'IV_CALLBACK_ACTION'
-        iv_value = iv_callback_action
-    ).
-
-    lo_event_data->set_value(
-      EXPORTING
-        iv_key   = 'IO_VIEW'
-        iv_value = CAST cl_wdr_view( io_view )
-    ).
-
-    open_popup( lo_event_data ).
+  METHOD readme.
+* https://github.com/boy0korea/ZWD_INSTANT_POPUP
   ENDMETHOD.
 
 
@@ -303,12 +294,29 @@ CLASS ZCL_ZKR_POSTCODE_V2 IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD on_close.
-    mo_comp_usage->delete_component( ).
-  ENDMETHOD.
+  METHOD wd_popup.
+    DATA: lo_event_data TYPE REF TO if_fpm_parameter,
+          lo_wdr_view   TYPE REF TO cl_wdr_view.
 
+    IF io_event_data IS NOT INITIAL.
+      lo_event_data = io_event_data.
+    ELSE.
+      CREATE OBJECT lo_event_data TYPE cl_fpm_parameter.
+    ENDIF.
 
-  METHOD readme.
-* https://github.com/boy0korea/ZWD_INSTANT_POPUP
+    lo_event_data->set_value(
+      EXPORTING
+        iv_key   = 'IV_CALLBACK_ACTION'
+        iv_value = iv_callback_action
+    ).
+
+    lo_wdr_view ?= io_view.
+    lo_event_data->set_value(
+      EXPORTING
+        iv_key   = 'IO_VIEW'
+        iv_value = lo_wdr_view
+    ).
+
+    open_popup( lo_event_data ).
   ENDMETHOD.
 ENDCLASS.

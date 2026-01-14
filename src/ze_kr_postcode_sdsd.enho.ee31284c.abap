@@ -13,7 +13,9 @@ ENHANCEMENT 0 ZE_KR_POSTCODE_SDSD.
             tables zdynpfields
             using help_infos.
 
-    READ TABLE zdynpfields WITH KEY fieldname = help_infos-tabname && '-COUNTRY'.
+    DATA: zlv_fieldname TYPE dynpread-fieldname.
+    zlv_fieldname = help_infos-tabname && '-COUNTRY'.
+    READ TABLE zdynpfields WITH KEY fieldname = zlv_fieldname.
     IF zdynpfields-fieldvalue EQ 'KR'.    " 국가가 KR 인 경우에만 변경함.
       shlp_top-shlpname = 'ZH_KR_POSTCODE'.
       shlp_top-shlptype = 'SH'.
